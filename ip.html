@@ -363,27 +363,6 @@
       justify-content: center;
     }
 
-    /* Spinner animation for loading cells */
-    .spinner {
-      display: inline-block;
-      width: 1em;
-      height: 1em;
-      border: 0.125em solid rgba(0, 0, 153, 0.2);
-      border-top-color: rgb(0, 0, 153);
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-      vertical-align: middle;
-    }
-
-    @keyframes spin {
-      0% {
-        transform: rotate(0deg);
-      }
-
-      100% {
-        transform: rotate(360deg);
-      }
-    }
 
     @media (max-width: 700px) {
       .top-bar {
@@ -465,8 +444,8 @@
                 <span class="footer-name">数据库 : </span><span class="footer-value">DB-IP</span>
               </a>
               <span> | </span>
-              <a href="https://garinasset.com">
-                <span class="footer-name">应用 & 接口 : </span><span class="footer-value">嘉林资产</span>
+              <a href="https://www.garinasset.com">
+                <span class="footer-name">应用 & 接口 : </span><span class="footer-value">嘉林数据</span>
               </a>
             </div>
           </div>
@@ -561,6 +540,17 @@
   </div>
 
   <script>
+    // 点点动画
+    function startDotAnimation(ids) {
+      const states = ["·", "··", "···"];
+      const elements = ids.map(id => document.getElementById(id));
+      const interval = setInterval(() => {
+        const n = Math.floor(Math.random() * 3) + 1;
+        const state = states[n - 1];
+        elements.forEach(el => { if (el) el.innerText = state; });
+      }, 400);
+      return () => clearInterval(interval);
+    }
     function autoResizeTextarea(textarea) {
       textarea.style.height = "auto";
       textarea.style.height = textarea.scrollHeight + "px";
@@ -629,8 +619,8 @@
       apiTryout.style.display = "";
       updateCell("cell-ip", ip);
 
-      // 其他字段先显示 spinner
-      [
+      // 点点动画
+      const dotIds = [
         "cell-country",
         "cell-state",
         "cell-city",
@@ -638,9 +628,8 @@
         "cell-latitude",
         "cell-ASN",
         "cell-ASO"
-      ].forEach(function (id) {
-        updateCell(id, "<span class='spinner'></span>", true);
-      });
+      ];
+      const stopDotAnimation = startDotAnimation(dotIds);
 
       // 试试接口内容无需等待
       const apiUrl = "https://api.garinasset.com/ip/" + ip;
@@ -678,7 +667,8 @@
           responseContentInput.value = "";
           error.textContent = "查询失败，请检查 API 服务是否正常启动。";
           error.style.display = "";
-        });
+        })
+        .finally(() => { stopDotAnimation(); });
     }
 
     // 搜索表单提交（防止页面刷新，动态加载结果，保持输入内容）
