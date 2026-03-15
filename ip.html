@@ -621,14 +621,14 @@
       });
 
       // 试试接口内容无需等待
-      const apiUrl = "https://api.garinasset.com/ip/" + encodeURIComponent(ip);
+      const apiUrl = "https://api.garinasset.com/ip/" + ip;
       apiText.value = "curl " + apiUrl;
       autoResizeTextarea(apiText);
 
       fetch(apiUrl)
         .then((r) => r.json())
         .then((data) => {
-          const apiUrl2 = "https://api.garinasset.com/ip/" + encodeURIComponent(data.ip ?? ip);
+          const apiUrl2 = "https://api.garinasset.com/ip/" + data.ip ?? ip;
           error.style.display = "none";
           apiText.value = "curl " + apiUrl2;
           responseContentLink.href = apiUrl2;
