@@ -147,7 +147,7 @@
         /* 输入错误时的红框提示（应用在整个搜索框容器上） */
         .search-box-container.error {
             border: 0.0625em solid #d93025;
-            box-shadow: 0 0 0.25em rgba(217,48,37,0.6);
+            box-shadow: 0 0 0.25em rgba(217, 48, 37, 0.6);
         }
 
         /* 输入错误时轻微抖动 */
@@ -156,12 +156,29 @@
         }
 
         @keyframes shake {
-            0% { transform: translateX(0); }
-            20% { transform: translateX(-4px); }
-            40% { transform: translateX(4px); }
-            60% { transform: translateX(-3px); }
-            80% { transform: translateX(3px); }
-            100% { transform: translateX(0); }
+            0% {
+                transform: translateX(0);
+            }
+
+            20% {
+                transform: translateX(-4px);
+            }
+
+            40% {
+                transform: translateX(4px);
+            }
+
+            60% {
+                transform: translateX(-3px);
+            }
+
+            80% {
+                transform: translateX(3px);
+            }
+
+            100% {
+                transform: translateX(0);
+            }
         }
 
         /* 按钮区域 */
@@ -171,7 +188,8 @@
             justify-content: center;
             align-items: center;
             flex-wrap: wrap;
-            width: 100%;
+            max-width: 43em;
+            margin: 0 auto;
         }
 
         .search-button {
@@ -221,6 +239,9 @@
             justify-content: center;
             align-items: center;
             flex-direction: column;
+            max-width: 43em;
+            margin: 0 auto;
+            text-align: center;
         }
 
         .body-text,
@@ -266,6 +287,7 @@
             text-decoration-color: rgba(0, 0, 153, 0.45);
             text-underline-offset: 0.25em;
         }
+
         .body-text-link:hover {
             text-decoration-style: solid;
         }
@@ -281,6 +303,11 @@
             .search-form-wrapper {
                 max-width: 100%;
                 padding-top: 0.25em;
+            }
+
+            .body-content,
+            .footer-content {
+                max-width: 100%;
             }
 
             .search-box-container {
@@ -307,7 +334,9 @@
 
             .buttons-area {
                 height: auto;
-                padding: 0.5em 0.5em;
+                padding: 0.5em 1em;
+                max-width: 43em;
+                margin: 0 auto;
             }
 
             .search-button {
@@ -330,7 +359,8 @@
             .body-text,
             .footer-text {
                 font-size: 0.7em;
-                margin: 0.25em 0.25em 0.25em 0;
+                margin: 0.25em 0;
+                width: 100%;
             }
 
             .footer-area {
