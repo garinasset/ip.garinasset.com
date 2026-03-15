@@ -1,0 +1,719 @@
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8" />
+  <title>IP 查询 - 详情 - 嘉林资产</title>
+  <meta name="description" content="GARINASSET IP 查询页面，快速查询指定 IP 地址的国家、城市、经纬度、ASN 和 ASO 信息。">
+  <meta name="keywords" content="IP 查询, IP 地址, ASN, ASO, 国家, 城市, 经度, 纬度, GARINASSET">
+  <meta name="author" content="GARINASSET">
+  <meta name="robots" content="index, follow">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    /* 页面容器和基础布局 */
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      font-size: 1em;
+      line-height: 1.5em;
+      /* background: #f5f7fb; */
+    }
+
+    .page-container {
+      width: 100%;
+    }
+
+    .page-shell {
+      /* width: min(100%, 72rem); */
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    @media (max-width: 600px) {
+      .page-shell {
+        padding: 0 1rem;
+      }
+    }
+
+    .main-content-wrapper {
+      flex-shrink: 0;
+      box-sizing: border-box;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 0 1.5em;
+    }
+
+    .content-panel {
+      width: 100%;
+      max-width: 54rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0.25em 1em 1.5em;
+      box-sizing: border-box;
+      border-radius: 0.875em;
+      background-color: #fafafa;
+    }
+
+    /* 头部区域 */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      padding: 2.5em 0 1.75em 0;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      padding: 0;
+      flex-shrink: 0;
+    }
+
+    .logo-image {
+      width: 7.5em;
+      object-fit: contain;
+      height: 7.5em;
+    }
+
+    .top-bar-panel {
+      display: flex;
+      flex: 1 1 auto;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.875rem;
+      width: 100%;
+      min-width: 0;
+      max-width: 52rem;
+      box-sizing: border-box;
+    }
+
+    .header-menu {
+      display: flex;
+      /* justify-content: flex-end; */
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      min-height: 1.5rem;
+      width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+    }
+
+    /* 搜索表单区域 */
+    .search-form {
+      display: flex;
+      align-items: center;
+      flex-wrap: nowrap;
+      gap: 0.625rem;
+      width: 100%;
+      min-width: 0;
+      max-width: 100%;
+      box-sizing: border-box;
+    }
+
+    .search-input {
+      flex: 1 1 0;
+      width: auto;
+      resize: none;
+      background-color: #fff;
+      border: 0.0625em solid #dadce0;
+      border-radius: 1.625em;
+      margin: 0;
+      padding: 0 0.75em;
+      color: rgba(0, 0, 0, 0.87);
+      word-wrap: break-word;
+      outline: none;
+      font:
+        1em Arial,
+        sans-serif;
+      height: 3.125em;
+      line-height: 1.5em;
+      box-shadow: 0px 0.1875em 0.625em 0px rgba(31, 31, 31, 0.08);
+      box-sizing: border-box;
+      white-space: nowrap;
+    }
+
+    .search-input::placeholder {
+      color: #9aa0a6;
+    }
+
+    .search-form.error .search-input {
+      border-color: #d93025;
+      box-shadow: 0 0 0.25em rgba(217, 48, 37, 0.6);
+    }
+
+    .search-button {
+      background-color: #f8f9fa;
+      border: 0.0625em solid #f8f9fa;
+      border-radius: 0.75em;
+      color: #3c4043;
+      font-family: Arial, sans-serif;
+      font-size: 0.875em;
+      font-weight: 500;
+      margin: 0;
+      padding: 0 1em;
+      height: 3.125em;
+      min-width: 3.375em;
+      text-align: center;
+      cursor: pointer;
+      user-select: none;
+      transition:
+        box-shadow 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease;
+      flex-shrink: 0;
+      box-shadow: 0px 0.1875em 0.625em 0px rgba(31, 31, 31, 0.08);
+    }
+
+    .shake {
+      animation: shake 0.35s ease;
+    }
+
+    @keyframes shake {
+      0% {
+        transform: translateX(0);
+      }
+
+      20% {
+        transform: translateX(-4px);
+      }
+
+      40% {
+        transform: translateX(4px);
+      }
+
+      60% {
+        transform: translateX(-3px);
+      }
+
+      80% {
+        transform: translateX(3px);
+      }
+
+      100% {
+        transform: translateX(0);
+      }
+    }
+
+    .search-button:hover {
+      box-shadow: 0 0.0625em 0.0625em rgba(0, 0, 0, 0.1);
+      background-color: #f8f9fa;
+      border: 0.0625em solid #dadce0;
+      color: #202124;
+    }
+
+    .search-button:focus {
+      border: 0.0625em solid #4285f4;
+      outline: none;
+    }
+
+
+    .result-list {
+      display: flex;
+      align-items: start;
+      flex-direction: column;
+      --result-key-width: 7.5em;
+      margin-top: 0.875em;
+      width: 100%;
+      max-width: 52rem;
+      padding: 0;
+      font-size: 1em;
+      box-sizing: border-box;
+      margin-bottom: 4rem;
+    }
+
+    .result-item {
+      padding: 0.625em 1em 0;
+      box-sizing: border-box;
+    }
+
+    .result-item-line {
+      display: inline-flex;
+      gap: 0.625em;
+      /* max-width: 100%; */
+      padding-bottom: 0.625em;
+      box-sizing: border-box;
+      border-bottom: 0.0625em dashed rgba(0, 0, 153, 0.12);
+    }
+
+    .result-item:last-child .result-item-line {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .result-key {
+      min-width: 5.5rem;
+      color: rgb(0, 0, 153);
+      font-weight: 700;
+      line-height: 1.5;
+    }
+
+    .result-value-cell {
+      color: rgb(0, 0, 153);
+      text-align: left;
+      line-height: 1.5;
+      word-break: normal;
+    }
+
+    .api-tryout {
+      margin-top: 1.25em;
+      width: 100%;
+      max-width: 52rem;
+      box-sizing: border-box;
+    }
+
+    .api-tryout-title {
+      margin: 0 0 0.5em 0;
+      color: rgb(0, 0, 153);
+      font-size: 1em;
+      font-weight: 700;
+      line-height: 1.5;
+    }
+
+    .api-tryout-link {
+      color: inherit;
+      text-decoration-line: underline;
+      text-decoration-style: dashed;
+      text-decoration-color: rgba(0, 0, 153, 0.35);
+      text-underline-offset: 0.2em;
+    }
+
+    .api-tryout-link:hover {
+      text-decoration-style: solid;
+    }
+
+    .api-tryout-input {
+      width: 100%;
+      padding: 0.875em 1em;
+      border: 0.0625em solid #dadce0;
+      border-radius: 0.5em;
+      background-color: #fff;
+      color: rgb(0, 0, 153);
+      font:
+        0.9375em/1.6 Menlo,
+        Monaco,
+        Consolas,
+        "Courier New",
+        monospace;
+      resize: none;
+      overflow: hidden;
+      box-shadow: 0px 0.1875em 0.625em 0px rgba(31, 31, 31, 0.08);
+      box-sizing: border-box;
+    }
+
+    .footer-text {
+      color: rgb(0, 0, 153);
+      display: flex;
+      flex-wrap: wrap;
+      font-size: 0.75em;
+      line-height: 1.125em;
+      margin: 0;
+      width: 100%;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+      box-sizing: border-box;
+    }
+
+    .footer-name {
+      font-weight: 400;
+    }
+
+    .footer-value {
+      color: rgb(0, 0, 153);
+      font-weight: 700;
+    }
+
+    .footer-text a {
+      color: rgb(0, 0, 153);
+      text-decoration-line: underline;
+      text-decoration-style: dashed;
+      text-decoration-color: rgba(0, 0, 153, 0.45);
+      text-underline-offset: 0.25em;
+      margin: 0 0.5rem;
+    }
+
+    .footer-text a:hover {
+      text-decoration-style: solid;
+    }
+
+    .status-message {
+      margin-top: 1em;
+      text-align: center;
+    }
+
+    .page-footer {
+      margin-top: 3rem;
+      padding: 0.75em 0 2.5em;
+      text-align: center;
+    }
+
+    .page-footer .footer-text {
+      justify-content: center;
+    }
+
+    /* Spinner animation for loading cells */
+    .spinner {
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+      border: 0.125em solid rgba(0,0,153,0.2);
+      border-top-color: rgb(0,0,153);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      vertical-align: middle;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 700px) {
+      .top-bar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+      }
+
+      .logo-area {
+        justify-content: center;
+      }
+
+      .top-bar-panel {
+        max-width: none;
+      }
+
+      .header-menu {
+        justify-content: center;
+      }
+
+      .search-form {
+        flex-direction: row;
+        flex-wrap: nowrap;
+      }
+
+      .search-input {
+        min-width: 0;
+        border-radius: 1rem;
+      }
+
+      .search-button {
+        flex: 0 0 auto;
+        width: auto;
+        min-width: 4.5rem;
+        border-radius: 0.75em;
+      }
+
+      .result-item {
+        padding: 0.5em 0.875em 0;
+      }
+
+      .result-item-line {
+        gap: 0.5em;
+        padding-bottom: 0.5em;
+      }
+
+      .result-list {
+        --result-key-width: 6.5em;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page-container">
+    <div class="page-shell">
+      <!-- 顶部左侧 LOGO，右侧上方菜单，下方搜索 -->
+      <div class="top-bar" role="navigation">
+        <div class="logo-area">
+          <a href="/" title="返回主页">
+            <picture>
+              <img class="logo-image" alt="GARINASSET" src="./images/logo.png" title="GARINASSET Logo"
+                id="garinasset-logo" />
+            </picture>
+          </a>
+        </div>
+        <div class="top-bar-panel">
+          <div class="header-menu">
+            <div class="footer-text">
+              <a href="/">
+                <span class="footer-value">首页</span>
+              </a>
+              <span> | </span>
+              <a href="https://api.garinasset.com/ip/redoc">
+                <span class="footer-name">API : </span><span class="footer-value">免费</span>
+              </a>
+              <span> | </span>
+              <a href="https://db-ip.com/">
+                <span class="footer-name">数据库 : </span><span class="footer-value">DB-IP</span>
+              </a>
+              <span> | </span>
+              <a href="https://garinasset.com">
+                <span class="footer-name">应用 & 接口 : </span><span class="footer-value">嘉林资产</span>
+              </a>
+            </div>
+          </div>
+          <form action="./ip.html" method="GET" role="search" class="search-form" id="search-form" novalidate>
+            <input class="search-input" name="ip" autofocus title="搜索" placeholder="输入 IP 地址" id="ip-input"
+              role="combobox" rows="1" spellcheck="false" autocomplete="off" inputmode="numeric" required />
+            <input class="search-button" value="查询" role="button" tabindex="0" type="submit" />
+          </form>
+        </div>
+      </div>
+
+      <!-- 查询结果区域 -->
+      <div class="main-content-wrapper">
+        <div class="content-panel">
+          <div class="result-list" id="ip-table" style="display: none">
+            <div class="result-item">
+              <div class="result-item-line">
+                <div class="result-key">IP:</div>
+                <div class="result-value-cell" id="cell-ip">-</div>
+              </div>
+            </div>
+            <div class="result-item">
+              <div class="result-item-line">
+                <div class="result-key">国家/地区:</div>
+                <div class="result-value-cell" id="cell-country">-</div>
+              </div>
+            </div>
+            <div class="result-item">
+              <div class="result-item-line">
+                <div class="result-key">省/州:</div>
+                <div class="result-value-cell" id="cell-state">-</div>
+              </div>
+            </div>
+            <div class="result-item">
+              <div class="result-item-line">
+                <div class="result-key">城市:</div>
+                <div class="result-value-cell" id="cell-city">-</div>
+              </div>
+            </div>
+            <div class="result-item">
+              <div class="result-item-line">
+                <div class="result-key">经度:</div>
+                <div class="result-value-cell" id="cell-longitude">-</div>
+              </div>
+            </div>
+            <div class="result-item">
+              <div class="result-item-line">
+                <div class="result-key">纬度:</div>
+                <div class="result-value-cell" id="cell-latitude">-</div>
+              </div>
+            </div>
+            <div class="result-item">
+              <div class="result-item-line">
+                <div class="result-key">ASN:</div>
+                <div class="result-value-cell" id="cell-ASN">-</div>
+              </div>
+            </div>
+            <div class="result-item">
+              <div class="result-item-line">
+                <div class="result-key">ASO:</div>
+                <div class="result-value-cell" id="cell-ASO">-</div>
+              </div>
+            </div>
+          </div>
+          <div class="api-tryout" id="api-tryout" style="display: none">
+            <h3 class="api-tryout-title">
+              <a class="api-tryout-link" id="api-tryout-link" href="https://api.garinasset.com/ip/redoc" target="_blank"
+                rel="noopener noreferrer">试试接口</a>
+            </h3>
+            <textarea class="api-tryout-input" id="api-tryout-input" rows="1" readonly></textarea>
+          </div>
+          <div class="api-tryout" id="response-content" style="display: block; min-height: 7em;">
+            <h3 class="api-tryout-title">
+              <a class="api-tryout-link" id="response-content-link" href="#" target="_blank"
+                rel="noopener noreferrer">响应内容</a>
+            </h3>
+            <textarea class="api-tryout-input" id="response-content-input" rows="1" readonly></textarea>
+          </div>
+          <div class="status-message" id="error-msg" style="color: red; display: none"></div>
+        </div>
+      </div>
+
+      <div class="page-footer">
+        <div class="footer-text">
+          <a href="mailto:contact@garinasset.com">
+            <span class="footer-value">联系我们</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function autoResizeTextarea(textarea) {
+      textarea.style.height = "auto";
+      textarea.style.height = textarea.scrollHeight + "px";
+    }
+
+    function countryCodeToFlag(code) {
+      if (!code || code.length !== 2) return "";
+      const first = code.charCodeAt(0) - 65 + 0x1f1e6;
+      const second = code.charCodeAt(1) - 65 + 0x1f1e6;
+      return String.fromCodePoint(first, second);
+    }
+
+    function isValidIpAddress(value) {
+      const ipv4 =
+        /^(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)$/;
+      const ipv6 = /^(([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}|::1|::)$/;
+      return ipv4.test(value) || ipv6.test(value);
+    }
+
+    // 辅助函数：简化赋值
+    function updateCell(id, value, isHTML) {
+      var cell = document.getElementById(id);
+      if (cell) {
+        if (isHTML) {
+          cell.innerHTML = value;
+        } else {
+          cell.textContent = value;
+        }
+      }
+    }
+
+    // 统一的查询和填充逻辑
+    function fetchAndFill(ip, doms) {
+      const {
+        input,
+        table,
+        apiTryout,
+        apiText,
+        responseContentLink,
+        responseContent,
+        responseContentInput,
+        error
+      } = doms;
+
+      error.style.display = "none";
+      responseContent.style.display = "block";
+      responseContentInput.value = "";
+
+      // 立即显示基础信息（无需等待接口）
+      table.style.display = "";
+      apiTryout.style.display = "";
+      updateCell("cell-ip", ip);
+
+      // 其他字段先显示 spinner
+      [
+        "cell-country",
+        "cell-state",
+        "cell-city",
+        "cell-longitude",
+        "cell-latitude",
+        "cell-ASN",
+        "cell-ASO"
+      ].forEach(function (id) {
+        updateCell(id, "<span class='spinner'></span>", true);
+      });
+
+      // 试试接口内容无需等待
+      const apiUrl = "https://api.garinasset.com/ip/" + encodeURIComponent(ip);
+      apiText.value = "curl " + apiUrl;
+      autoResizeTextarea(apiText);
+
+      fetch(apiUrl)
+        .then((r) => r.json())
+        .then((data) => {
+          const apiUrl2 = "https://api.garinasset.com/ip/" + encodeURIComponent(data.ip ?? ip);
+          error.style.display = "none";
+          apiText.value = "curl " + apiUrl2;
+          responseContentLink.href = apiUrl2;
+          autoResizeTextarea(apiText);
+          responseContentInput.value = JSON.stringify(data, null, 2);
+          responseContent.style.display = "block";
+          autoResizeTextarea(responseContentInput);
+          input.value = ip;
+          // 填充结果
+          updateCell("cell-ip", data.ip ?? "None");
+          updateCell(
+            "cell-country",
+            data.country
+              ? countryCodeToFlag(data.country.toUpperCase()) + " " + data.country.toUpperCase()
+              : "None"
+          );
+          updateCell("cell-state", data.state ?? "None");
+          updateCell("cell-city", data.city ?? "None");
+          updateCell("cell-longitude", data.longitude != null ? data.longitude : "None");
+          updateCell("cell-latitude", data.latitude != null ? data.latitude : "None");
+          updateCell("cell-ASN", data.ASN ?? "None");
+          updateCell("cell-ASO", data.ASO ?? "None");
+        })
+        .catch(() => {
+          responseContentInput.value = "";
+          error.textContent = "查询失败，请检查 API 服务是否正常启动。";
+          error.style.display = "";
+        });
+    }
+
+    // 搜索表单提交（防止页面刷新，动态加载结果，保持输入内容）
+    (function () {
+      const form = document.getElementById("search-form");
+      const input = document.getElementById("ip-input");
+      const table = document.getElementById("ip-table");
+      const apiTryout = document.getElementById("api-tryout");
+      const apiText = document.getElementById("api-tryout-input");
+      const responseContentLink = document.getElementById("response-content-link");
+      const responseContent = document.getElementById("response-content");
+      const responseContentInput = document.getElementById("response-content-input");
+      const error = document.getElementById("error-msg");
+
+      const doms = {
+        input,
+        table,
+        apiTryout,
+        apiText,
+        responseContentLink,
+        responseContent,
+        responseContentInput,
+        error
+      };
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const value = input.value.trim();
+        input.value = value;
+        if (!isValidIpAddress(value)) {
+          form.classList.add("error");
+          form.classList.remove("shake");
+          void form.offsetWidth;
+          form.classList.add("shake");
+          input.placeholder = "输入 IP 地址";
+          return;
+        }
+        form.classList.remove("error");
+        history.replaceState(null, "", "?ip=" + encodeURIComponent(value));
+        fetchAndFill(value, doms);
+      });
+      input.addEventListener("input", function () {
+        form.classList.remove("error");
+      });
+
+      // 页面带有ip参数则自动查询
+      const params = new URLSearchParams(window.location.search);
+      const ip = params.get("ip");
+      if (!ip) {
+        table.style.display = "none";
+        apiTryout.style.display = "none";
+        responseContent.style.display = "block";
+        responseContentInput.value = "";
+        error.textContent = "未找到 IP 参数";
+        error.style.display = "";
+        return;
+      }
+      input.value = ip;
+      error.style.display = "none";
+      fetchAndFill(ip, doms);
+    })();
+  </script>
+</body>
+
+</html>
