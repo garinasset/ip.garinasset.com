@@ -729,6 +729,10 @@
         }
 
         form.classList.remove("error");
+
+        // 在移动端点击键盘“搜索”后收起键盘
+        input.blur();
+
         history.replaceState(null, "", "?ip=" + encodeURIComponent(value));
         fetchAndFill(value, doms);
       });
