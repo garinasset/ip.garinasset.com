@@ -5,10 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>IP 查询 - 首页 - 嘉林资产</title>
-    <meta name="description" content="IP 地理位置查询工具">
-    <meta name="keywords" content="ip, asn, geolocation, lookup, 地理信息, 位置信息, 免费 ip 查询">
     <meta name="description" content="GARINASSET IP 查询工具，可快速获取 IP 地址的地理位置、国家、城市、经纬度、ASN 和 ASO 信息。">
-    <meta name="keywords" content="IP 查询, IP 地址, ASN, ASO, 国家, 城市, 经纬度, GARINASSET">
+    <meta name="keywords" content="ip, asn, geolocation, lookup, 地理信息, 位置信息, 免费 ip 查询, IP 查询, IP 地址, ASN, ASO, 国家, 城市, 经纬度, GARINASSET">
     <meta name="author" content="GARINASSET">
     <meta name="robots" content="index, follow">
     <style>
@@ -19,20 +17,16 @@
             flex-direction: column;
             height: 100%;
         }
-
         body {
             margin: 0;
             font-family: Arial, sans-serif;
             font-size: 1em;
             line-height: 1.5em;
         }
-
         .main-content-wrapper {
             flex-shrink: 0;
             box-sizing: border-box;
         }
-
-        /* LOGO区域样式 */
         .logo-area {
             display: flex;
             flex-direction: column;
@@ -40,22 +34,17 @@
             min-height: 5.75em;
             padding-top: 3.75em;
         }
-
         .logo-image {
             max-width: 16em;
             object-fit: contain;
             max-height: 16em;
         }
-
         @media (max-width: 600px) {
             .logo-image {
                 max-width: 7em;
                 max-height: 7em;
-                /* 移动端更小 */
             }
         }
-
-        /* 搜索表单区域 */
         .search-container {
             padding: 1.25em 1em;
             display: flex;
@@ -63,11 +52,9 @@
             align-items: center;
             width: 100%;
         }
-
         .search-form {
             width: 100%;
         }
-
         .search-form-wrapper {
             margin: 0 auto;
             max-width: 43em;
@@ -75,7 +62,6 @@
             position: relative;
             width: 100%;
         }
-
         .search-box-container {
             display: flex;
             z-index: 3;
@@ -88,7 +74,6 @@
             margin: 0 auto;
             width: 100%;
         }
-
         .search-inner {
             flex: 1;
             display: flex;
@@ -97,7 +82,6 @@
             border-radius: inherit;
             padding: 0 0.5em 0 0;
         }
-
         .search-icon-wrapper {
             display: flex;
             align-items: center;
@@ -106,11 +90,9 @@
             margin-top: 0;
             height: 3.125em;
         }
-
         .search-icon-container {
             margin: auto;
         }
-
         .search-icon {
             color: #bdc1c6;
             display: flex;
@@ -119,11 +101,9 @@
             line-height: 1.25em;
             width: 1.25em;
         }
-
         .search-icon svg path {
             fill: currentColor;
         }
-
         .search-input {
             width: 100%;
             resize: none;
@@ -139,49 +119,24 @@
             height: 3.125em;
             line-height: 1.5em;
         }
-
         .search-input::placeholder {
             color: #9aa0a6;
         }
-
-        /* 输入错误时的红框提示（应用在整个搜索框容器上） */
         .search-box-container.error {
             border: 0.0625em solid #d93025;
             box-shadow: 0 0 0.25em rgba(217, 48, 37, 0.6);
         }
-
-        /* 输入错误时轻微抖动 */
         .shake {
             animation: shake 0.35s ease;
         }
-
         @keyframes shake {
-            0% {
-                transform: translateX(0);
-            }
-
-            20% {
-                transform: translateX(-4px);
-            }
-
-            40% {
-                transform: translateX(4px);
-            }
-
-            60% {
-                transform: translateX(-3px);
-            }
-
-            80% {
-                transform: translateX(3px);
-            }
-
-            100% {
-                transform: translateX(0);
-            }
+            0% { transform: translateX(0);}
+            20% { transform: translateX(-4px);}
+            40% { transform: translateX(4px);}
+            60% { transform: translateX(-3px);}
+            80% { transform: translateX(3px);}
+            100% { transform: translateX(0);}
         }
-
-        /* 按钮区域 */
         .buttons-area {
             height: 4.375em;
             display: flex;
@@ -191,7 +146,6 @@
             max-width: 43em;
             margin: 0 auto;
         }
-
         .search-button {
             background-color: #f8f9fa;
             border: 0.0625em solid #f8f9fa;
@@ -210,20 +164,16 @@
             transition: box-shadow 0.2s ease, border-color 0.2s ease, color 0.2s ease;
             flex-shrink: 0;
         }
-
         .search-button:hover {
             box-shadow: 0 0.0625em 0.0625em rgba(0, 0, 0, .1);
             background-color: #f8f9fa;
             border: 0.0625em solid #dadce0;
             color: #202124;
         }
-
         .search-button:focus {
             border: 0.0625em solid #4285f4;
             outline: none;
         }
-
-        /* 主体区域、地理信息、ASO、客户端区域统一样式 */
         .ip-area,
         .geolocation-area,
         .aso-area,
@@ -232,7 +182,6 @@
             text-align: center;
             padding: 0.625em 1em;
         }
-
         .body-content,
         .footer-content {
             display: flex;
@@ -243,7 +192,6 @@
             margin: 0 auto;
             text-align: center;
         }
-
         .body-text,
         .footer-text {
             color: rgb(0, 0, 153);
@@ -253,33 +201,17 @@
             margin: 0.3125em 0;
             word-break: break-word;
         }
-
         .body-name,
         .footer-name {
             font-weight: 400;
         }
-
         .body-value,
         .footer-value {
             color: rgb(0, 0, 153);
             font-weight: 700;
         }
-
         .body-text a,
-        .footer-text a {
-            color: rgb(0, 0, 153);
-            text-decoration-line: underline;
-            text-decoration-style: dashed;
-            text-decoration-color: rgba(0, 0, 153, 0.45);
-            text-underline-offset: 0.25em;
-        }
-
-        .body-text a:hover,
-        .footer-text a:hover {
-            text-decoration-style: solid;
-        }
-
-        /* IP显示为超链接的专用样式，与footer链接风格一致 */
+        .footer-text a,
         .body-text-link {
             color: rgb(0, 0, 153);
             text-decoration-line: underline;
@@ -287,58 +219,49 @@
             text-decoration-color: rgba(0, 0, 153, 0.45);
             text-underline-offset: 0.25em;
         }
-
+        .body-text a:hover,
+        .footer-text a:hover,
         .body-text-link:hover {
             text-decoration-style: solid;
         }
-
-        /* 页脚/附加信息区域 */
         .footer-area {
             flex: 1;
             text-align: center;
             padding: 2.5em 1em;
         }
-
         @media (max-width: 600px) {
             .search-form-wrapper {
                 max-width: 100%;
                 padding-top: 0.25em;
             }
-
             .body-content,
             .footer-content {
                 max-width: 100%;
             }
-
             .search-box-container {
                 min-height: 2.5em;
                 border-radius: 1.25em;
                 box-shadow: 0px 0.125em 0.5em 0px rgba(31, 31, 31, 0.08);
             }
-
             .search-icon-wrapper {
                 padding-right: 0.5em;
                 padding-left: 0.5em;
                 height: 2.5em;
             }
-
             .search-icon {
                 height: 1em;
                 width: 1em;
             }
-
             .search-input {
                 height: 2.5em;
                 font-size: 16px;
             }
-
             .buttons-area {
                 height: auto;
                 padding: 0.5em 1em;
                 max-width: 43em;
                 margin: 0 auto;
             }
-
             .search-button {
                 font-size: 0.875em;
                 height: 2em;
@@ -346,23 +269,19 @@
                 margin: 0.5em 0.25em;
                 padding: 0 0.75em;
             }
-
             .logo-area {
                 padding-top: 2.5em;
                 min-height: 4em;
             }
-
             .logo-image {
                 max-width: 15em;
             }
-
             .body-text,
             .footer-text {
                 font-size: 0.7em;
                 margin: 0.25em 0;
                 width: 100%;
             }
-
             .footer-area {
                 padding: 1.5em 1em;
             }
@@ -421,7 +340,7 @@
                     <span class="body-name">您的 IP</span>
                 </div>
                 <div class="body-text">
-                    <span class="body-value" id="ip">正在加载...</span>
+                    <span class="body-value" id="ip">·</span>
                 </div>
             </div>
         </div>
@@ -433,19 +352,19 @@
                 <span class="body-name">地理信息</span>
             </div>
             <div class="body-text">
-                <span class="body-value" id="country">正在加载...</span>
+                <span class="body-value" id="country">·</span>
             </div>
             <div class="body-text">
-                <span class="body-value" id="state">正在加载...</span>
+                <span class="body-value" id="state">·</span>
             </div>
             <div class="body-text">
-                <span class="body-value" id="city">正在加载...</span>
+                <span class="body-value" id="city">·</span>
             </div>
             <div class="body-text">
-                <span class="body-value" id="longitude">正在加载...</span>
+                <span class="body-value" id="longitude">·</span>
             </div>
             <div class="body-text">
-                <span class="body-value" id="latitude">正在加载...</span>
+                <span class="body-value" id="latitude">·</span>
             </div>
         </div>
     </div>
@@ -456,7 +375,7 @@
                 <span class="body-name">ASO</span>
             </div>
             <div class="body-text">
-                <span class="body-value" id="ASO">正在加载...</span>
+                <span class="body-value" id="ASO">·</span>
             </div>
         </div>
     </div>
@@ -467,7 +386,7 @@
                 <span class="body-name">您的客户端</span>
             </div>
             <div class="body-text">
-                <span class="body-value" id="client">正在加载...</span>
+                <span class="body-value" id="client">·</span>
             </div>
         </div>
     </div>
@@ -490,123 +409,100 @@
         </div>
     </div>
     <script>
-        // 搜索表单输入验证
-        const form = document.getElementById("search-form");
-        const input = document.getElementById("search-input");
-        const searchBox = document.querySelector(".search-box-container");
-
-        form.addEventListener("submit", function (e) {
-            // 去除前后空格
-            const value = input.value.trim();
-            input.value = value;
-
-            // IPv4 正则
-            const ipv4 = /^(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)$/;
-
-            // IPv6 简化正则
-            const ipv6 = /^(([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}|::1|::)$/;
-
-            if (!ipv4.test(value) && !ipv6.test(value)) {
-                // 阻止提交
-                e.preventDefault();
-
-                // 添加红框
-                searchBox.classList.add("error");
-
-                // 触发 shake 动画
-                searchBox.classList.remove("shake");
-                void searchBox.offsetWidth;
-                searchBox.classList.add("shake");
-
-                // 修改 placeholder
-                const oldInputValue = input.value;
-                input.value = ""
-                input.placeholder = "输入 IP 地址";
-
-                // 0.8 秒后恢复
-                setTimeout(() => {
-                    input.value = oldInputValue;
-                }, 600);
-            } else {
-                // 移除错误状态
-                searchBox.classList.remove("error");
-            }
-        });
-
-        // 用户重新输入时自动移除红框
-        input.addEventListener("input", function () {
+    // 表单输入验证
+    const form = document.getElementById("search-form");
+    const input = document.getElementById("search-input");
+    const searchBox = document.querySelector(".search-box-container");
+    form.addEventListener("submit", function (e) {
+        const value = input.value.trim();
+        input.value = value;
+        const ipv4 = /^(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)$/;
+        const ipv6 = /^(([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}|::1|::)$/;
+        if (!ipv4.test(value) && !ipv6.test(value)) {
+            e.preventDefault();
+            searchBox.classList.add("error");
+            searchBox.classList.remove("shake");
+            void searchBox.offsetWidth;
+            searchBox.classList.add("shake");
+            const oldInputValue = input.value;
+            input.value = "";
+            input.placeholder = "输入 IP 地址";
+            setTimeout(() => { input.value = oldInputValue; }, 600);
+        } else {
             searchBox.classList.remove("error");
-        });
-
-        /**
-         * 将国家代码转换为 emoji 国旗
-         * @param {string} code - 两位国家字母代码
-         * @returns {string} emoji 国旗字符
-         */
-        function countryCodeToFlag(code) {
-            if (!code || code.length !== 2) return "";
-            // 转为大写后计算区域符号编码
-            const first = code.charCodeAt(0) - 65 + 0x1F1E6;
-            const second = code.charCodeAt(1) - 65 + 0x1F1E6;
-            return String.fromCodePoint(first, second);
         }
-
-        /**
-         * 将十进制度数转换为度分秒（DMS）格式
-         * @param {number} deg - 经度或纬度的十进制度数
-         * @param {string} type - "lat" 表示纬度, "lon" 表示经度
-         * @returns {string} DMS 格式字符串
-         */
-        function toDMS(deg, type) {
-            if (deg === null || deg === undefined) return "";
-            const absolute = Math.abs(deg);
-            const d = Math.floor(absolute);
-            const minutesFloat = (absolute - d) * 60;
-            const m = Math.floor(minutesFloat);
-            const s = ((minutesFloat - m) * 60).toFixed(2);
-            let direction = "";
-            if (type === "lat") {
-                direction = deg >= 0 ? "N" : "S";
-            } else if (type === "lon") {
-                direction = deg >= 0 ? "E" : "W";
+    });
+    input.addEventListener("input", function () {
+        searchBox.classList.remove("error");
+    });
+    // 国家代码转 emoji 国旗
+    function countryCodeToFlag(code) {
+        if (!code || code.length !== 2) return "";
+        const first = code.charCodeAt(0) - 65 + 0x1F1E6;
+        const second = code.charCodeAt(1) - 65 + 0x1F1E6;
+        return String.fromCodePoint(first, second);
+    }
+    // 十进制度数转度分秒格式
+    function toDMS(deg, type) {
+        if (deg === null || deg === undefined) return "";
+        const absolute = Math.abs(deg);
+        const d = Math.floor(absolute);
+        const minutesFloat = (absolute - d) * 60;
+        const m = Math.floor(minutesFloat);
+        const s = ((minutesFloat - m) * 60).toFixed(2);
+        let direction = "";
+        if (type === "lat") direction = deg >= 0 ? "N" : "S";
+        else if (type === "lon") direction = deg >= 0 ? "E" : "W";
+        return `${d}°${m}′${s}″${direction}`;
+    }
+    // 点点动画
+    function startDotAnimation(ids) {
+        const states = ["·", "··", "···"];
+        const elements = ids.map(id => document.getElementById(id));
+        const interval = setInterval(() => {
+            const n = Math.floor(Math.random() * 3) + 1;
+            const state = states[n - 1];
+            elements.forEach(el => { if (el) el.innerText = state; });
+        }, 400);
+        return () => clearInterval(interval);
+    }
+    // 统一赋值函数
+    function updateCell(id, value) {
+        const el = document.getElementById(id);
+        if (el) el.innerText = value || "None";
+    }
+    // 动画字段ID
+    const animatedIds = [
+        "ip", "country", "state", "city", "longitude", "latitude", "ASO", "client"
+    ];
+    const stopDotAnimation = startDotAnimation(animatedIds);
+    // 获取客户端 IP 和地理信息并填充页面
+    fetch('https://api.garinasset.com/ip/client')
+        .then(r => r.json())
+        .then(data => {
+            stopDotAnimation();
+            // IP 地址为超链接
+            const ipEl = document.getElementById("ip");
+            if (data.ip && ipEl) {
+                ipEl.innerHTML = `<a href="./ip.html?ip=${data.ip}" class="body-text-link">${data.ip}</a>`;
+            } else if (ipEl) {
+                ipEl.innerText = "";
             }
-            return `${d}°${m}′${s}″${direction}`;
-        }
-
-        // 简化赋值的辅助函数
-        function updateCell(id, value) {
-            document.getElementById(id).innerText = value || "None";
-        }
-
-        // 获取客户端 IP 和地理信息并填充页面
-        fetch('https://api.garinasset.com/ip/client')
-            .then(r => r.json())
-            .then(data => {
-                // 显示 IP 地址为超链接
-                if (data.ip) {
-                    document.getElementById("ip").innerHTML =
-                        `<a href="./ip.html?ip=${data.ip}" class="body-text-link">${data.ip}</a>`;
-                } else {
-                    document.getElementById("ip").innerText = "";
-                }
-                // 显示国家/地区 emoji+代码
-                document.getElementById("country").innerText =
-                    data.country ? countryCodeToFlag(data.country) + " " + data.country : "None";
-                // 其他信息赋值
-                updateCell("state", data.state);
-                updateCell("city", data.city);
-                document.getElementById("longitude").innerText =
-                    data.longitude ? toDMS(data.longitude, "lon") : "None";
-                document.getElementById("latitude").innerText =
-                    data.latitude ? toDMS(data.latitude, "lat") : "None";
-                updateCell("ASO", data.ASO);
-                updateCell("client", data.user_agent);
-            })
-            .catch(() => {
-                // 请求失败时提示
-                document.getElementById("ip").innerText = "获取失败";
-                document.getElementById("client").innerText = "获取失败";
+            // 国家/地区 emoji+代码
+            updateCell("country", data.country ? countryCodeToFlag(data.country) + " " + data.country : "None");
+            updateCell("state", data.state);
+            updateCell("city", data.city);
+            updateCell("longitude", data.longitude ? toDMS(data.longitude, "lon") : "None");
+            updateCell("latitude", data.latitude ? toDMS(data.latitude, "lat") : "None");
+            updateCell("ASO", data.ASO);
+            updateCell("client", data.user_agent);
+        })
+        .catch(() => {
+            stopDotAnimation();
+            ["ip", "client", "country", "state", "city", "longitude", "latitude", "ASO"].forEach(id => {
+                updateCell(id, "获取失败");
             });
+        });
     </script>
 </body>
 
