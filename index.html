@@ -302,7 +302,9 @@
 
             .search-input {
                 height: 2.5em;
-                font-size: 0.875em;
+                /* iOS Safari zooms inputs smaller than 16px which shifts layout.
+                   Force 16px to prevent zoom and keep the whole search box visible. */
+                font-size: 16px;
             }
 
             .buttons-area {
@@ -508,13 +510,7 @@
             searchBox.classList.remove("error");
         });
 
-        // 聚焦时滚动 search-container 到视口可见区域（移动端友好）
-        input.addEventListener("focus", function () {
-            const container = document.querySelector(".search-container");
-            if (container) {
-                container.scrollIntoView({ behavior: "smooth", block: "center" });
-            }
-        });
+
 
         /**
          * 将国家代码转换为 emoji 国旗
