@@ -3,9 +3,9 @@
 
 <head>
   <meta charset="utf-8" />
-  <title>IP 查询 - 详情 - 嘉林资产</title>
-  <meta name="description" content="GARINASSET IP 查询页面，快速查询指定 IP 地址的国家、城市、经纬度、ASN 和 ASO 信息。">
-  <meta name="keywords" content="IP 查询, IP 地址, ASN, ASO, 国家, 城市, 经度, 纬度, GARINASSET">
+  <title>IP 查询 - 详情</title>
+  <meta name="description" content="IP 查询页面，快速查询指定 IP 地址的国家、城市、经纬度、ASN 和 ASO 信息, GARINASSET .">
+  <meta name="keywords" content="IP 查询, IP 地址, ASN, ASO, 国家, 城市, 经度, 纬度, GARINASSET .">
   <meta name="author" content="GARINASSET">
   <meta name="robots" content="index, follow">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -471,8 +471,9 @@
             </div>
           </div>
           <form action="./ip.html" method="GET" role="search" class="search-form" id="search-form" novalidate>
-            <input class="search-input" name="ip" autofocus title="搜索" placeholder="输入 IP 地址" id="ip-input"
-              role="combobox" rows="1" spellcheck="false" autocomplete="off" required />
+            <input class="search-input" name="ip" title="搜索" placeholder="输入 IP 地址" id="ip-input" role="combobox"
+              rows="1" spellcheck="false" autocomplete="off" autocapitalize="off" inputmode="text" enterkeyhint="search"
+              required />
             <input class="search-button" value="查询" role="button" tabindex="0" type="submit" />
           </form>
         </div>
@@ -649,7 +650,7 @@
       fetch(apiUrl)
         .then((r) => r.json())
         .then((data) => {
-          const apiUrl2 = "https://api.garinasset.com/ip/" + data.ip ?? ip;
+          const apiUrl2 = "https://api.garinasset.com/ip/" + (data.ip ?? ip);
           error.style.display = "none";
           apiText.value = "curl " + apiUrl2;
           responseContentLink.href = apiUrl2;
@@ -707,20 +708,48 @@
         e.preventDefault();
         const value = input.value.trim();
         input.value = value;
+
         if (!isValidIpAddress(value)) {
           form.classList.add("error");
+
+          // 触发 shake 动画
           form.classList.remove("shake");
           void form.offsetWidth;
           form.classList.add("shake");
+
+          const oldInputValue = input.value;
+          input.value = "";
           input.placeholder = "输入 IP 地址";
+
+          setTimeout(() => {
+            input.value = oldInputValue;
+          }, 600);
+
           return;
         }
+
         form.classList.remove("error");
         history.replaceState(null, "", "?ip=" + encodeURIComponent(value));
         fetchAndFill(value, doms);
       });
       input.addEventListener("input", function () {
-        form.classList.remove("error");
+        // 用户重新输入时立即清除错误和动画状态
+        form.classList.remove("error", "shake");
+      });
+
+      // 在获得焦点时如果已有内容则自动全选（只执行一次），避免每次点击都被重新全选
+      input.addEventListener("focus", function () {
+        if (this.value && !this.dataset.autoSelected) {
+          this.dataset.autoSelected = "1";
+          setTimeout(() => {
+            this.select();
+          }, 0);
+        }
+      });
+
+      // 失去焦点时重置状态，下次重新进入输入框仍然可以自动全选
+      input.addEventListener("blur", function () {
+        delete this.dataset.autoSelected;
       });
 
       // 页面带有ip参数则自动查询
@@ -737,6 +766,15 @@
       }
       input.value = ip;
       error.style.display = "none";
+
+      // URL 参数也进行一次 IP 合法性校验
+      if (!isValidIpAddress(ip)) {
+        form.classList.add("error");
+        error.textContent = "URL 中的 IP 地址不合法";
+        error.style.display = "";
+        return;
+      }
+
       fetchAndFill(ip, doms);
     })();
   </script>
