@@ -241,6 +241,7 @@
       padding-bottom: 0.625em;
       box-sizing: border-box;
       border-bottom: 0.0625em dashed rgba(0, 0, 153, 0.12);
+      flex-shrink: 1;
     }
 
     .result-item:last-child .result-item-line {
@@ -259,7 +260,11 @@
       color: rgb(0, 0, 153);
       text-align: left;
       line-height: 1.5;
-      word-break: normal;
+      /* For mobile: allow long IPs to wrap and not overflow */
+      word-break: break-all;
+      overflow-wrap: break-word;
+      max-width: 100%;
+      display: inline-block;
     }
 
     .api-tryout {
@@ -461,7 +466,7 @@
           </div>
           <form action="./ip.html" method="GET" role="search" class="search-form" id="search-form" novalidate>
             <input class="search-input" name="ip" autofocus title="搜索" placeholder="输入 IP 地址" id="ip-input"
-              role="combobox" rows="1" spellcheck="false" autocomplete="off" inputmode="numeric" required />
+              role="combobox" rows="1" spellcheck="false" autocomplete="off" required />
             <input class="search-button" value="查询" role="button" tabindex="0" type="submit" />
           </form>
         </div>
