@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>IP 查询 - 首页 - 嘉林资产</title>
     <meta name="description" content="GARINASSET IP 查询工具，可快速获取 IP 地址的地理位置、国家、城市、经纬度、ASN 和 ASO 信息。">
-    <meta name="keywords" content="ip, asn, geolocation, lookup, 地理信息, 位置信息, 免费 ip 查询, IP 查询, IP 地址, ASN, ASO, 国家, 城市, 经纬度, GARINASSET">
+    <meta name="keywords"
+        content="ip, asn, geolocation, lookup, 地理信息, 位置信息, 免费 ip 查询, IP 查询, IP 地址, ASN, ASO, 国家, 城市, 经纬度, GARINASSET">
     <meta name="author" content="GARINASSET">
     <meta name="robots" content="index, follow">
     <style>
@@ -17,16 +18,19 @@
             flex-direction: column;
             height: 100%;
         }
+
         body {
             margin: 0;
             font-family: Arial, sans-serif;
             font-size: 1em;
             line-height: 1.5em;
         }
+
         .main-content-wrapper {
             flex-shrink: 0;
             box-sizing: border-box;
         }
+
         .logo-area {
             display: flex;
             flex-direction: column;
@@ -34,17 +38,20 @@
             min-height: 5.75em;
             padding-top: 3.75em;
         }
+
         .logo-image {
             max-width: 16em;
             object-fit: contain;
             max-height: 16em;
         }
+
         @media (max-width: 600px) {
             .logo-image {
                 max-width: 7em;
                 max-height: 7em;
             }
         }
+
         .search-container {
             padding: 1.25em 1em;
             display: flex;
@@ -52,9 +59,11 @@
             align-items: center;
             width: 100%;
         }
+
         .search-form {
             width: 100%;
         }
+
         .search-form-wrapper {
             margin: 0 auto;
             max-width: 43em;
@@ -62,6 +71,7 @@
             position: relative;
             width: 100%;
         }
+
         .search-box-container {
             display: flex;
             z-index: 3;
@@ -74,6 +84,7 @@
             margin: 0 auto;
             width: 100%;
         }
+
         .search-inner {
             flex: 1;
             display: flex;
@@ -82,6 +93,7 @@
             border-radius: inherit;
             padding: 0 0.5em 0 0;
         }
+
         .search-icon-wrapper {
             display: flex;
             align-items: center;
@@ -90,9 +102,11 @@
             margin-top: 0;
             height: 3.125em;
         }
+
         .search-icon-container {
             margin: auto;
         }
+
         .search-icon {
             color: #bdc1c6;
             display: flex;
@@ -101,9 +115,11 @@
             line-height: 1.25em;
             width: 1.25em;
         }
+
         .search-icon svg path {
             fill: currentColor;
         }
+
         .search-input {
             width: 100%;
             resize: none;
@@ -119,24 +135,46 @@
             height: 3.125em;
             line-height: 1.5em;
         }
+
         .search-input::placeholder {
             color: #9aa0a6;
         }
+
         .search-box-container.error {
             border: 0.0625em solid #d93025;
             box-shadow: 0 0 0.25em rgba(217, 48, 37, 0.6);
         }
+
         .shake {
             animation: shake 0.35s ease;
         }
+
         @keyframes shake {
-            0% { transform: translateX(0);}
-            20% { transform: translateX(-4px);}
-            40% { transform: translateX(4px);}
-            60% { transform: translateX(-3px);}
-            80% { transform: translateX(3px);}
-            100% { transform: translateX(0);}
+            0% {
+                transform: translateX(0);
+            }
+
+            20% {
+                transform: translateX(-4px);
+            }
+
+            40% {
+                transform: translateX(4px);
+            }
+
+            60% {
+                transform: translateX(-3px);
+            }
+
+            80% {
+                transform: translateX(3px);
+            }
+
+            100% {
+                transform: translateX(0);
+            }
         }
+
         .buttons-area {
             height: 4.375em;
             display: flex;
@@ -146,6 +184,7 @@
             max-width: 43em;
             margin: 0 auto;
         }
+
         .search-button {
             background-color: #f8f9fa;
             border: 0.0625em solid #f8f9fa;
@@ -164,16 +203,19 @@
             transition: box-shadow 0.2s ease, border-color 0.2s ease, color 0.2s ease;
             flex-shrink: 0;
         }
+
         .search-button:hover {
             box-shadow: 0 0.0625em 0.0625em rgba(0, 0, 0, .1);
             background-color: #f8f9fa;
             border: 0.0625em solid #dadce0;
             color: #202124;
         }
+
         .search-button:focus {
             border: 0.0625em solid #4285f4;
             outline: none;
         }
+
         .ip-area,
         .geolocation-area,
         .aso-area,
@@ -182,6 +224,7 @@
             text-align: center;
             padding: 0.625em 1em;
         }
+
         .body-content,
         .footer-content {
             display: flex;
@@ -192,6 +235,7 @@
             margin: 0 auto;
             text-align: center;
         }
+
         .body-text,
         .footer-text {
             color: rgb(0, 0, 153);
@@ -201,15 +245,18 @@
             margin: 0.3125em 0;
             word-break: break-word;
         }
+
         .body-name,
         .footer-name {
             font-weight: 400;
         }
+
         .body-value,
         .footer-value {
             color: rgb(0, 0, 153);
             font-weight: 700;
         }
+
         .body-text a,
         .footer-text a,
         .body-text-link {
@@ -219,49 +266,59 @@
             text-decoration-color: rgba(0, 0, 153, 0.45);
             text-underline-offset: 0.25em;
         }
+
         .body-text a:hover,
         .footer-text a:hover,
         .body-text-link:hover {
             text-decoration-style: solid;
         }
+
         .footer-area {
             flex: 1;
             text-align: center;
             padding: 2.5em 1em;
         }
+
         @media (max-width: 600px) {
             .search-form-wrapper {
                 max-width: 100%;
                 padding-top: 0.25em;
             }
+
             .body-content,
             .footer-content {
                 max-width: 100%;
             }
+
             .search-box-container {
                 min-height: 2.5em;
                 border-radius: 1.25em;
                 box-shadow: 0px 0.125em 0.5em 0px rgba(31, 31, 31, 0.08);
             }
+
             .search-icon-wrapper {
                 padding-right: 0.5em;
                 padding-left: 0.5em;
                 height: 2.5em;
             }
+
             .search-icon {
                 height: 1em;
                 width: 1em;
             }
+
             .search-input {
                 height: 2.5em;
                 font-size: 16px;
             }
+
             .buttons-area {
                 height: auto;
                 padding: 0.5em 1em;
                 max-width: 43em;
                 margin: 0 auto;
             }
+
             .search-button {
                 font-size: 0.875em;
                 height: 2em;
@@ -269,19 +326,23 @@
                 margin: 0.5em 0.25em;
                 padding: 0 0.75em;
             }
+
             .logo-area {
                 padding-top: 2.5em;
                 min-height: 4em;
             }
+
             .logo-image {
                 max-width: 15em;
             }
+
             .body-text,
             .footer-text {
                 font-size: 0.7em;
                 margin: 0.25em 0;
                 width: 100%;
             }
+
             .footer-area {
                 padding: 1.5em 1em;
             }
@@ -409,100 +470,121 @@
         </div>
     </div>
     <script>
-    // 表单输入验证
-    const form = document.getElementById("search-form");
-    const input = document.getElementById("search-input");
-    const searchBox = document.querySelector(".search-box-container");
-    form.addEventListener("submit", function (e) {
-        const value = input.value.trim();
-        input.value = value;
-        const ipv4 = /^(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)$/;
-        const ipv6 = /^(([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}|::1|::)$/;
-        if (!ipv4.test(value) && !ipv6.test(value)) {
-            e.preventDefault();
-            searchBox.classList.add("error");
-            searchBox.classList.remove("shake");
-            void searchBox.offsetWidth;
-            searchBox.classList.add("shake");
-            const oldInputValue = input.value;
-            input.value = "";
-            input.placeholder = "输入 IP 地址";
-            setTimeout(() => { input.value = oldInputValue; }, 600);
-        } else {
-            searchBox.classList.remove("error");
-        }
-    });
-    input.addEventListener("input", function () {
-        searchBox.classList.remove("error");
-    });
-    // 国家代码转 emoji 国旗
-    function countryCodeToFlag(code) {
-        if (!code || code.length !== 2) return "";
-        const first = code.charCodeAt(0) - 65 + 0x1F1E6;
-        const second = code.charCodeAt(1) - 65 + 0x1F1E6;
-        return String.fromCodePoint(first, second);
-    }
-    // 十进制度数转度分秒格式
-    function toDMS(deg, type) {
-        if (deg === null || deg === undefined) return "";
-        const absolute = Math.abs(deg);
-        const d = Math.floor(absolute);
-        const minutesFloat = (absolute - d) * 60;
-        const m = Math.floor(minutesFloat);
-        const s = ((minutesFloat - m) * 60).toFixed(2);
-        let direction = "";
-        if (type === "lat") direction = deg >= 0 ? "N" : "S";
-        else if (type === "lon") direction = deg >= 0 ? "E" : "W";
-        return `${d}°${m}′${s}″${direction}`;
-    }
-    // 点点动画
-    function startDotAnimation(ids) {
-        const states = ["·", "··", "···"];
-        const elements = ids.map(id => document.getElementById(id));
-        const interval = setInterval(() => {
-            const n = Math.floor(Math.random() * 3) + 1;
-            const state = states[n - 1];
-            elements.forEach(el => { if (el) el.innerText = state; });
-        }, 400);
-        return () => clearInterval(interval);
-    }
-    // 统一赋值函数
-    function updateCell(id, value) {
-        const el = document.getElementById(id);
-        if (el) el.innerText = value || "None";
-    }
-    // 动画字段ID
-    const animatedIds = [
-        "ip", "country", "state", "city", "longitude", "latitude", "ASO", "client"
-    ];
-    const stopDotAnimation = startDotAnimation(animatedIds);
-    // 获取客户端 IP 和地理信息并填充页面
-    fetch('https://api.garinasset.com/ip/client')
-        .then(r => r.json())
-        .then(data => {
-            stopDotAnimation();
-            // IP 地址为超链接
-            const ipEl = document.getElementById("ip");
-            if (data.ip && ipEl) {
-                ipEl.innerHTML = `<a href="./ip.html?ip=${data.ip}" class="body-text-link">${data.ip}</a>`;
-            } else if (ipEl) {
-                ipEl.innerText = "";
+        // 表单输入验证
+        const form = document.getElementById("search-form");
+        const input = document.getElementById("search-input");
+        const searchBox = document.querySelector(".search-box-container");
+        form.addEventListener("submit", function (e) {
+            const value = input.value.trim();
+            input.value = value;
+
+            // 新的 IP 验证逻辑
+            function isValidIpAddress(value) {
+                if (!value || typeof value !== "string") return false;
+
+                // IPv4 判断
+                const ipv4Parts = value.split(".");
+                if (ipv4Parts.length === 4 && ipv4Parts.every(part => {
+                    const n = Number(part);
+                    return String(n) === part && n >= 0 && n <= 255;
+                })) {
+                    return true;
+                }
+
+                // IPv6 判断，利用 URL 构造器
+                try {
+                    new URL("http://[" + value + "]/");
+                    return true;
+                } catch (e) {
+                    return false;
+                }
             }
-            // 国家/地区 emoji+代码
-            updateCell("country", data.country ? countryCodeToFlag(data.country) + " " + data.country : "None");
-            updateCell("state", data.state);
-            updateCell("city", data.city);
-            updateCell("longitude", data.longitude ? toDMS(data.longitude, "lon") : "None");
-            updateCell("latitude", data.latitude ? toDMS(data.latitude, "lat") : "None");
-            updateCell("ASO", data.ASO);
-            updateCell("client", data.user_agent);
-        })
-        .catch(() => {
-            stopDotAnimation();
-            ["ip", "client", "country", "state", "city", "longitude", "latitude", "ASO"].forEach(id => {
-                updateCell(id, "获取失败");
-            });
+
+            if (!isValidIpAddress(value)) {
+                e.preventDefault();
+                searchBox.classList.add("error");
+                searchBox.classList.remove("shake");
+                void searchBox.offsetWidth;
+                searchBox.classList.add("shake");
+                const oldInputValue = input.value;
+                input.value = "";
+                input.placeholder = "输入 IP 地址";
+                setTimeout(() => { input.value = oldInputValue; }, 600);
+            } else {
+                searchBox.classList.remove("error");
+            }
         });
+        input.addEventListener("input", function () {
+            searchBox.classList.remove("error");
+        });
+        // 国家代码转 emoji 国旗
+        function countryCodeToFlag(code) {
+            if (!code || code.length !== 2) return "";
+            const first = code.charCodeAt(0) - 65 + 0x1F1E6;
+            const second = code.charCodeAt(1) - 65 + 0x1F1E6;
+            return String.fromCodePoint(first, second);
+        }
+        // 十进制度数转度分秒格式
+        function toDMS(deg, type) {
+            if (deg === null || deg === undefined) return "";
+            const absolute = Math.abs(deg);
+            const d = Math.floor(absolute);
+            const minutesFloat = (absolute - d) * 60;
+            const m = Math.floor(minutesFloat);
+            const s = ((minutesFloat - m) * 60).toFixed(2);
+            let direction = "";
+            if (type === "lat") direction = deg >= 0 ? "N" : "S";
+            else if (type === "lon") direction = deg >= 0 ? "E" : "W";
+            return `${d}°${m}′${s}″${direction}`;
+        }
+        // 点点动画
+        function startDotAnimation(ids) {
+            const states = ["·", "··", "···"];
+            const elements = ids.map(id => document.getElementById(id));
+            const interval = setInterval(() => {
+                const n = Math.floor(Math.random() * 3) + 1;
+                const state = states[n - 1];
+                elements.forEach(el => { if (el) el.innerText = state; });
+            }, 400);
+            return () => clearInterval(interval);
+        }
+        // 统一赋值函数
+        function updateCell(id, value) {
+            const el = document.getElementById(id);
+            if (el) el.innerText = value || "None";
+        }
+        // 动画字段ID
+        const animatedIds = [
+            "ip", "country", "state", "city", "longitude", "latitude", "ASO", "client"
+        ];
+        const stopDotAnimation = startDotAnimation(animatedIds);
+        // 获取客户端 IP 和地理信息并填充页面
+        fetch('https://api.garinasset.com/ip/client')
+            .then(r => r.json())
+            .then(data => {
+                stopDotAnimation();
+                // IP 地址为超链接
+                const ipEl = document.getElementById("ip");
+                if (data.ip && ipEl) {
+                    ipEl.innerHTML = `<a href="./ip.html?ip=${data.ip}" class="body-text-link">${data.ip}</a>`;
+                } else if (ipEl) {
+                    ipEl.innerText = "";
+                }
+                // 国家/地区 emoji+代码
+                updateCell("country", data.country ? countryCodeToFlag(data.country) + " " + data.country : "None");
+                updateCell("state", data.state);
+                updateCell("city", data.city);
+                updateCell("longitude", data.longitude ? toDMS(data.longitude, "lon") : "None");
+                updateCell("latitude", data.latitude ? toDMS(data.latitude, "lat") : "None");
+                updateCell("ASO", data.ASO);
+                updateCell("client", data.user_agent);
+            })
+            .catch(() => {
+                stopDotAnimation();
+                ["ip", "client", "country", "state", "city", "longitude", "latitude", "ASO"].forEach(id => {
+                    updateCell(id, "获取失败");
+                });
+            });
     </script>
 </body>
 

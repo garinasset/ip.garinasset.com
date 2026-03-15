@@ -368,15 +368,21 @@
       display: inline-block;
       width: 1em;
       height: 1em;
-      border: 0.125em solid rgba(0,0,153,0.2);
-      border-top-color: rgb(0,0,153);
+      border: 0.125em solid rgba(0, 0, 153, 0.2);
+      border-top-color: rgb(0, 0, 153);
       border-radius: 50%;
       animation: spin 0.8s linear infinite;
       vertical-align: middle;
     }
+
     @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
     }
 
     @media (max-width: 700px) {
@@ -567,10 +573,25 @@
     }
 
     function isValidIpAddress(value) {
-      const ipv4 =
-        /^(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)$/;
-      const ipv6 = /^(([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}|::1|::)$/;
-      return ipv4.test(value) || ipv6.test(value);
+      if (!value || typeof value !== "string") return false;
+
+      // IPv4 判断
+      const ipv4Parts = value.split(".");
+      if (ipv4Parts.length === 4 && ipv4Parts.every(part => {
+        const n = Number(part);
+        return String(n) === part && n >= 0 && n <= 255;
+      })) {
+        return true;
+      }
+
+      // IPv6 判断，利用 URL 构造器
+      try {
+        // URL 要用 [ ] 包裹 IPv6 地址
+        new URL("http://[" + value + "]/");
+        return true;
+      } catch (e) {
+        return false;
+      }
     }
 
     // 辅助函数：简化赋值
