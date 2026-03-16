@@ -845,9 +845,6 @@
         // 在移动端点击键盘“搜索”后收起键盘
         input.blur();
 
-        // 如果查询的 IP 与当前已查询的相同，则不重复请求
-        if (currentIp === value) return;
-
         history.replaceState(null, "", "?ip=" + encodeURIComponent(value));
         currentIp = value;
         fetchAndFill(value, doms);
