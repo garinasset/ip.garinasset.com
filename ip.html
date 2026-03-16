@@ -770,7 +770,7 @@
             input.value = value;
 
             // 更新 URL 为 ?ip=xxx，方便分享与刷新
-            history.replaceState(null, "", "?ip=" + encodeURIComponent(value));
+            // history.replaceState(null, "", "?ip=" + encodeURIComponent(value));
 
             currentIp = value;
             fetchAndFill(value, doms);
