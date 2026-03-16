@@ -545,7 +545,7 @@
                 const n = Math.floor(Math.random() * 3) + 1;
                 const state = states[n - 1];
                 elements.forEach(el => { if (el) el.innerText = state; });
-            }, 400);
+            }, 350);
             return () => clearInterval(interval);
         }
         // 统一赋值函数
