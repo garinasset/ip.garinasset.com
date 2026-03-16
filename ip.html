@@ -585,6 +585,108 @@
       }
     }
 
+    // 根据 IANA Special-Purpose Address Registry 与相关 RFC 判断 IP 类型
+    // 主要依据：RFC1918, RFC6598, RFC3927, RFC5735/RFC6890, RFC1112, RFC1122,
+    // RFC4291, RFC4193, RFC3849 等
+    function getIpSpecialType(ip) {
+      // IPv4
+      if (ip.includes(".")) {
+        const p = ip.split(".").map(Number);
+        const [a, b, c, d] = p;
+
+        // 255.255.255.255 Broadcast — RFC919
+        if (a === 255 && b === 255 && c === 255 && d === 255)
+          return "IPv4 Broadcast 地址 (RFC919)";
+
+        // 255.X.X.X
+        if (a === 255)
+          return "IPv4 E类保留地址 (IANA)";
+
+        // 0.0.0.0/8 — RFC1122
+        if (a === 0)
+          return "IPv4 未指定地址范围 0.0.0.0/8 (RFC1122)";
+
+        // 10.0.0.0/8 — RFC1918
+        if (a === 10)
+          return "私有 IPv4 地址 10.0.0.0/8 (RFC1918)";
+
+        // 172.16.0.0/12 — RFC1918
+        if (a === 172 && b >= 16 && b <= 31)
+          return "私有 IPv4 地址 172.16.0.0/12 (RFC1918)";
+
+        // 192.168.0.0/16 — RFC1918
+        if (a === 192 && b === 168)
+          return "私有 IPv4 地址 192.168.0.0/16 (RFC1918)";
+
+        // 100.64.0.0/10 — RFC6598
+        if (a === 100 && b >= 64 && b <= 127)
+          return "运营商级 NAT 地址 100.64.0.0/10 (RFC6598)";
+
+        // 127.0.0.0/8 Loopback — RFC1122
+        if (a === 127)
+          return "IPv4 回环地址 127.0.0.0/8 (RFC1122)";
+
+        // 169.254.0.0/16 Link Local — RFC3927
+        if (a === 169 && b === 254)
+          return "IPv4 Link‑Local 地址 169.254.0.0/16 (RFC3927)";
+
+        // 224.0.0.0/4 Multicast — RFC1112
+        if (a >= 224 && a <= 239)
+          return "IPv4 Multicast 地址 224.0.0.0/4 (RFC1112)";
+
+        // 192.0.2.0/24 TEST-NET — RFC5737
+        if (a === 192 && b === 0 && c === 2)
+          return "IPv4 文档示例地址 192.0.2.0/24 (RFC5737)";
+
+        // 198.51.100.0/24 TEST-NET — RFC5737
+        if (a === 198 && b === 51 && c === 100)
+          return "IPv4 文档示例地址 198.51.100.0/24 (RFC5737)";
+
+        // 203.0.113.0/24 TEST-NET — RFC5737
+        if (a === 203 && b === 0 && c === 113)
+          return "IPv4 文档示例地址 203.0.113.0/24 (RFC5737)";
+
+        // 240.0.0.0/4 Reserved — RFC6890
+        if (a >= 240 && a <= 254)
+          return "IPv4 保留地址 240.0.0.0/4 (RFC6890)";
+
+        return null;
+      }
+
+      // IPv6
+      if (ip.includes(":")) {
+        const lower = ip.toLowerCase();
+
+        // ::1 Loopback — RFC4291
+        if (lower === "::1")
+          return "IPv6 回环地址 ::1 (RFC4291)";
+
+        // :: Unspecified — RFC4291
+        if (lower === "::")
+          return "IPv6 未指定地址 :: (RFC4291)";
+
+        // fc00::/7 Unique Local Address — RFC4193
+        if (lower.startsWith("fc") || lower.startsWith("fd"))
+          return "IPv6 私有地址 fc00::/7 (RFC4193)";
+
+        // fe80::/10 Link Local — RFC4291
+        if (lower.startsWith("fe8") || lower.startsWith("fe9") || lower.startsWith("fea") || lower.startsWith("feb"))
+          return "IPv6 Link‑Local 地址 fe80::/10 (RFC4291)";
+
+        // ff00::/8 Multicast — RFC4291
+        if (lower.startsWith("ff"))
+          return "IPv6 Multicast 地址 ff00::/8 (RFC4291)";
+
+        // 2001:db8::/32 Documentation — RFC3849
+        if (lower.startsWith("2001:db8"))
+          return "IPv6 文档示例地址 2001:db8::/32 (RFC3849)";
+
+        return null;
+      }
+
+      return null;
+    }
+
     // 辅助函数：简化赋值
     function updateCell(id, value, isHTML) {
       var cell = document.getElementById(id);
@@ -665,7 +767,7 @@
         })
         .catch(() => {
           responseContentInput.value = "";
-          error.textContent = "查询失败，请检查 API 服务是否正常启动。";
+          error.textContent = "未收到服务器的 正确 响应, 请您检查网络连接或尝试刷新页面重试。";
           error.style.display = "";
         })
         .finally(() => { stopDotAnimation(); });
@@ -704,7 +806,6 @@
         if (!isValidIpAddress(value)) {
           form.classList.add("error");
 
-          // 触发 shake 动画
           form.classList.remove("shake");
           void form.offsetWidth;
           form.classList.add("shake");
@@ -717,6 +818,25 @@
             input.value = oldInputValue;
           }, 600);
 
+          return;
+        }
+
+        // 判断是否为私有或特殊地址
+        const specialType = getIpSpecialType(value);
+        if (specialType) {
+          form.classList.add("error");
+
+          form.classList.remove("shake");
+          void form.offsetWidth;
+          form.classList.add("shake");
+
+          const oldInputValue = input.value;
+          input.value = "";
+          input.placeholder = specialType;
+
+          setTimeout(() => {
+            input.value = oldInputValue;
+          }, 600);
           return;
         }
 
@@ -735,6 +855,7 @@
       input.addEventListener("input", function () {
         // 用户重新输入时立即清除错误和动画状态
         form.classList.remove("error", "shake");
+        input.placeholder = "输入 IP 地址";
       });
 
       // 在获得焦点时如果已有内容则自动全选（只执行一次），避免每次点击都被重新全选
