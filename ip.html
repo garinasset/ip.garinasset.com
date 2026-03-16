@@ -523,7 +523,7 @@
               <a class="api-tryout-link" id="response-content-link" href="#" target="_blank"
                 rel="noopener noreferrer">响应内容</a>
             </h3>
-            <textarea class="api-tryout-input" id="response-content-input" rows="1" readonly></textarea>
+            <textarea class="api-tryout-input" id="response-content-input" rows="10" readonly></textarea>
           </div>
           <div class="status-message" id="error-msg" style="color: red; display: none"></div>
         </div>
@@ -694,6 +694,8 @@
         error
       };
 
+      let currentIp = null;
+
       form.addEventListener("submit", function (e) {
         e.preventDefault();
         const value = input.value.trim();
@@ -723,7 +725,11 @@
         // 在移动端点击键盘“搜索”后收起键盘
         input.blur();
 
+        // 如果查询的 IP 与当前已查询的相同，则不重复请求
+        if (currentIp === value) return;
+
         history.replaceState(null, "", "?ip=" + encodeURIComponent(value));
+        currentIp = value;
         fetchAndFill(value, doms);
       });
       input.addEventListener("input", function () {
@@ -749,26 +755,45 @@
       // 页面带有ip参数则自动查询
       const params = new URLSearchParams(window.location.search);
       const ip = params.get("ip");
+
+      // 如果没有 IP 参数，则查询用户自身 IP
       if (!ip) {
-        table.style.display = "none";
-        apiTryout.style.display = "none";
-        responseContent.style.display = "block";
-        responseContentInput.value = "";
-        error.textContent = "未找到 IP 参数";
-        error.style.display = "";
+        fetch("https://api.garinasset.com/ip/")
+          .then(r => r.text())
+          .then(userIp => {
+            const value = userIp.trim();
+            if (!isValidIpAddress(value)) {
+              error.textContent = "已获取到您的 IP 地址, 但是却发现它不是有效的 IP 地址";
+              error.style.display = "";
+              return;
+            }
+            input.value = value;
+
+            // 更新 URL 为 ?ip=xxx，方便分享与刷新
+            history.replaceState(null, "", "?ip=" + encodeURIComponent(value));
+
+            currentIp = value;
+            fetchAndFill(value, doms);
+          })
+          .catch(() => {
+            error.textContent = "在本次请求中, 未能通过 API 获取您的 IP 地址";
+            error.style.display = "";
+          });
         return;
       }
+
       input.value = ip;
       error.style.display = "none";
 
       // URL 参数也进行一次 IP 合法性校验
       if (!isValidIpAddress(ip)) {
         form.classList.add("error");
-        error.textContent = "URL 中的 IP 地址不合法";
+        error.textContent = "URL 中的 IP 地址不是有效 IP 地址";
         error.style.display = "";
         return;
       }
 
+      currentIp = ip;
       fetchAndFill(ip, doms);
     })();
   </script>
