@@ -692,7 +692,49 @@
 
       return null;
     }
+    async function fetchWithNetworkRetrySimple(url, maxRetries = 3, timeout = 5000) {
+      let lastError;
 
+      for (let i = 0; i < maxRetries; i++) {
+        try {
+          // 超时控制
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), timeout);
+
+          // 简单 GET 请求，避免自定义 header 触发 CORS 预检
+          const response = await fetch(url, {
+            method: 'GET',
+            signal: controller.signal,
+            cache: 'no-store', // 禁用缓存
+          });
+
+          clearTimeout(timeoutId);
+
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+          }
+
+          // 返回 JSON 数据
+          return await response.json();
+
+        } catch (error) {
+          lastError = error;
+
+          if (error.name === 'AbortError') {
+            console.warn(`Attempt ${i + 1} timed out`);
+          } else {
+            console.warn(`Attempt ${i + 1} failed:`, error);
+          }
+
+          if (i < maxRetries - 1) {
+            // 指数退避
+            await new Promise(res => setTimeout(res, Math.pow(2, i) * 500));
+          }
+        }
+      }
+
+      throw lastError;
+    }
     // 辅助函数：简化赋值
     function updateCell(id, value, isHTML) {
       var cell = document.getElementById(id);
@@ -744,8 +786,7 @@
       apiText.value = "curl " + apiUrl;
       autoResizeTextarea(apiText);
 
-      fetch(apiUrl)
-        .then((r) => r.json())
+      fetchWithNetworkRetrySimple(apiUrl)
         .then((data) => {
           const apiUrl2 = "https://api.garinasset.com/ip/" + (data.ip ?? ip);
           error.style.display = "none";
