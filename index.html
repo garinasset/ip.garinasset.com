@@ -429,6 +429,17 @@
             </div>
         </div>
     </div>
+    <!-- ISP 区域 -->
+    <div class="main-content-wrapper isp-area">
+        <div class="body-content" id="isp-body-content">
+            <div class="body-text">
+                <span class="body-name">ISP</span>
+            </div>
+            <div class="body-text">
+                <span class="body-value" id="ISP">·</span>
+            </div>
+        </div>
+    </div>
     <!-- ASO 区域 -->
     <div class="main-content-wrapper aso-area">
         <div class="body-content" id="aso-body-content">
@@ -691,12 +702,13 @@
                 }
                 // 国家/地区 emoji+代码
                 updateCell("country", data.country ? countryCodeToFlag(data.country) + " " + data.country : "None");
-                updateCell("state", data.state);
-                updateCell("city", data.city);
+                updateCell("state", data.state ?? "None");
+                updateCell("city", data.city ?? "None");
                 updateCell("longitude", data.longitude ? toDMS(data.longitude, "lon") : "None");
                 updateCell("latitude", data.latitude ? toDMS(data.latitude, "lat") : "None");
-                updateCell("ASO", data.ASO);
-                updateCell("client", data.user_agent);
+                updateCell("ISP", data.ISP ?? "None");
+                updateCell("ASO", data.ASO ?? "None");
+                updateCell("client", data.user_agent ?? "None");
             })
             .catch(() => {
                 stopDotAnimation();

@@ -500,6 +500,12 @@
             </div>
             <div class="result-item">
               <div class="result-item-line">
+                <div class="result-key">ISP:</div>
+                <div class="result-value-cell" id="cell-ISP">·</div>
+              </div>
+            </div>
+            <div class="result-item">
+              <div class="result-item-line">
                 <div class="result-key">ASN:</div>
                 <div class="result-value-cell" id="cell-ASN">·</div>
               </div>
@@ -762,6 +768,7 @@
           updateCell("cell-city", data.city ?? "None");
           updateCell("cell-longitude", data.longitude != null ? data.longitude : "None");
           updateCell("cell-latitude", data.latitude != null ? data.latitude : "None");
+          updateCell("cell-ISP", data.ISP ?? "None");
           updateCell("cell-ASN", data.ASN ?? "None");
           updateCell("cell-ASO", data.ASO ?? "None");
         })
