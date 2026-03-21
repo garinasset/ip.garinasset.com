@@ -418,7 +418,7 @@
                 <span class="body-value" id="country">·</span>
             </div>
             <div class="body-text">
-                <span class="body-value" id="state">·</span>
+                <span class="body-value" id="region">·</span>
             </div>
             <div class="body-text">
                 <span class="body-value" id="city">·</span>
@@ -687,7 +687,7 @@
         }
         // 动画字段ID
         const animatedIds = [
-            "ip", "country", "state", "city", "longitude", "latitude", "ISP", "ASO", "client"
+            "ip", "country", "region", "city", "longitude", "latitude", "ISP", "ASO", "client"
         ];
         async function fetchWithNetworkRetrySimple(url, maxRetries = 3, timeout = 5000) {
             let lastError;
@@ -746,7 +746,7 @@
                 }
                 // 国家/地区 emoji+代码
                 updateCell("country", data.country ? countryCodeToFlag(data.country) + " " + data.country : "None");
-                updateCell("state", data.state ?? "None");
+                updateCell("region", data.region ?? "None");
                 updateCell("city", data.city ?? "None");
                 updateCell("longitude", data.longitude ? toDMS(data.longitude, "lon") : "None");
                 updateCell("latitude", data.latitude ? toDMS(data.latitude, "lat") : "None");
@@ -756,7 +756,7 @@
             })
             .catch(() => {
                 stopDotAnimation();
-                ["ip", "client", "country", "state", "city", "longitude", "latitude", "ISP", "ASO"].forEach(id => {
+                ["ip", "client", "country", "region", "city", "longitude", "latitude", "ISP", "ASO"].forEach(id => {
                     updateCell(id, "获取失败");
                 });
             });

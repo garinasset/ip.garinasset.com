@@ -479,7 +479,7 @@
             <div class="result-item">
               <div class="result-item-line">
                 <div class="result-key">省/州:</div>
-                <div class="result-value-cell" id="cell-state">·</div>
+                <div class="result-value-cell" id="cell-region">·</div>
               </div>
             </div>
             <div class="result-item">
@@ -774,7 +774,7 @@
       // 点点动画
       const dotIds = [
         "cell-country",
-        "cell-state",
+        "cell-region",
         "cell-city",
         "cell-longitude",
         "cell-latitude",
@@ -808,7 +808,7 @@
               ? countryCodeToFlag(data.country.toUpperCase()) + " " + data.country.toUpperCase()
               : "None"
           );
-          updateCell("cell-state", data.state ?? "None");
+          updateCell("cell-region", data.region ?? "None");
           updateCell("cell-city", data.city ?? "None");
           updateCell("cell-longitude", data.longitude != null ? data.longitude : "None");
           updateCell("cell-latitude", data.latitude != null ? data.latitude : "None");
