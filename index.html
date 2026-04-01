@@ -476,7 +476,7 @@
                     <span class="footer-name">数据库 : </span><span class="footer-value">DB-IP</span>
                 </a>
                 <span> | </span>
-                <a href="https://www.garinasset.com">
+                <a href="https://api.garinasset.com">
                     <span class="footer-name">应用 & 接口 : </span><span class="footer-value">嘉林数据</span>
                 </a>
             </div>
@@ -757,7 +757,7 @@
             .catch(() => {
                 stopDotAnimation();
                 ["ip", "client", "country", "region", "city", "longitude", "latitude", "ISP", "ASO"].forEach(id => {
-                    updateCell(id, "获取失败");
+                    updateCell(id, "没有收到服务器的数据响应: 请刷新页面重试.");
                 });
             });
     </script>
