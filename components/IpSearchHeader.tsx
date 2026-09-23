@@ -149,7 +149,7 @@ export default function IpSearchHeader({
           md:grid-cols-[7.5rem_minmax(0,1fr)]
           md:grid-rows-auto
           md:gap-x-8
-          md:gap-y-3
+          md:gap-y-1
         "
       >
         {/* ================================================== */}
@@ -201,7 +201,6 @@ export default function IpSearchHeader({
             text-[#000099]
 
             md:flex
-            md:min-h-6
             md:flex-wrap
           "
         >
@@ -262,11 +261,12 @@ export default function IpSearchHeader({
             w-full
             min-w-0
             flex-col
-            items-stretch
+            items-center
             gap-3
 
             md:flex-row
             md:items-center
+            md:gap-2.5
           "
         >
           {/* 搜索框 */}
@@ -283,18 +283,18 @@ export default function IpSearchHeader({
             inputMode="text"
             enterKeyHint="search"
             className={[
-              "h-12 w-full min-w-0",
-              "rounded-full",
-              "border bg-white px-4",
+              "h-[3.125em] w-full min-w-0",
+              "rounded-[1.625em]",
+              "border bg-white px-3",
               "text-base text-[rgba(0,0,0,.87)]",
               "outline-none",
-              "shadow-[0_3px_10px_0_rgba(31,31,31,.08)]",
+              "shadow-[0_0.1875em_0.625em_0_rgba(31,31,31,.08)]",
               "placeholder:text-[#9aa0a6]",
               "transition",
               "focus:border-[#4285f4]",
 
               error
-                ? "border-[#d93025] shadow-[0_0_4px_rgba(217,48,37,.6)]"
+                ? "border-[#d93025] shadow-[0_0_0.25em_rgba(217,48,37,.6)]"
                 : "border-[#dadce0]",
 
               "md:flex-1",
@@ -305,19 +305,17 @@ export default function IpSearchHeader({
           <button
             type="submit"
             className="
-              h-10
+              h-[3.125em]
               w-24
               shrink-0
-              self-center
               rounded-xl
               border border-[#f8f9fa]
               bg-[#f8f9fa]
-              px-5
-              my-4
+              px-4
               text-sm
               font-medium
               text-[#3c4043]
-              shadow-[0_3px_10px_0_rgba(31,31,31,.08)]
+              shadow-[0_0.1875em_0.625em_0_rgba(31,31,31,.08)]
               transition
 
               hover:border-[#dadce0]
