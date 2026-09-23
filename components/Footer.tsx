@@ -18,14 +18,14 @@ export default function Footer() {
           <span> | </span>
 
           <a
-            href="https://db-ip.com/"
+            href="https://www.maxmind.com/"
             target="_blank"
             rel="noopener noreferrer"
             className="underline decoration-dashed decoration-[rgba(0,0,153,.45)] underline-offset-4 hover:decoration-solid"
           >
             <span>数据库 : </span>
             <span className="font-bold">
-              DB-IP
+              GeoLite2
             </span>
           </a>
 

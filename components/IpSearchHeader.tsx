@@ -118,12 +118,12 @@ export default function IpSearchHeader({
             <span>|</span>
 
             <a
-              href="https://db-ip.com/"
+              href="https://www.maxmind.com/"
               target="_blank"
               rel="noopener noreferrer"
               className="mx-2 underline decoration-dashed underline-offset-4"
             >
-              数据库 : <strong>DB-IP</strong>
+              数据库 : <strong>GeoLite2</strong>
             </a>
 
             <span>|</span>
