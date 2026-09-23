@@ -1,6 +1,6 @@
 {
-  "name": "IP 地理信息查询",
-  "short_name": "IP 地理信息",
+  "name": "IP 地理信息",
+  "short_name": "IP 地理",
   "icons": [
     {
       "src": "/web-app-manifest-192x192.png",
