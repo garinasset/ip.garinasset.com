@@ -1,7 +1,10 @@
 "use client";
 
+import Image from "next/image";
+import Link from "next/link";
 import { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+
 import {
   getIpSpecialType,
   isValidIpAddress,
@@ -59,7 +62,6 @@ export default function IpSearchHeader({
     const oldValue = value;
 
     setValue("");
-
     setPlaceholder(message);
 
     setTimeout(() => {
@@ -77,14 +79,17 @@ export default function IpSearchHeader({
     <div className="flex w-full items-center justify-center gap-8 py-7 max-[700px]:flex-col max-[700px]:gap-4">
       {/* Logo */}
       <div className="flex shrink-0 items-center justify-center">
-        <a href="/" title="返回主页">
-          <img
+        <Link href="/" title="返回主页">
+          <Image
             src="/images/logo.png"
-            alt="GARINASSET"
-            title="GARINASSET Logo"
+            alt="IP 地理"
+            title="IP 地理 Logo"
+            width={120}
+            height={120}
+            priority
             className="h-[7.5em] w-[7.5em] object-contain"
           />
-        </a>
+        </Link>
       </div>
 
       {/* 右侧 */}
@@ -92,12 +97,12 @@ export default function IpSearchHeader({
         {/* 菜单 */}
         <div className="flex min-h-6 w-full flex-wrap items-center">
           <div className="flex w-full flex-wrap items-center text-[12px] leading-[18px] text-[#000099]">
-            <a
+            <Link
               href="/"
               className="mx-2 font-bold underline decoration-dashed underline-offset-4 first:ml-0"
             >
               首页
-            </a>
+            </Link>
 
             <span>|</span>
 
