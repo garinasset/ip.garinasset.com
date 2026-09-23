@@ -55,6 +55,15 @@ const MENU_LINKS = [
   {
     label: (
       <>
+        MIT : <strong>China Operator IP</strong>
+      </>
+    ),
+    href: "https://china-operator-ip.yfgao.com/",
+    external: true,
+  },
+  {
+    label: (
+      <>
         应用 & 接口 : <strong>嘉林数据</strong>
       </>
     ),
