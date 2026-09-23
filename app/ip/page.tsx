@@ -5,7 +5,9 @@ import IpPageClient from "./IpPageClient";
 export default function IpPage() {
   return (
     <Suspense fallback={<IpPageLoading />}>
-      <IpPageClient />
+      <div className="mx-auto w-full max-w-[64rem]">
+        <IpPageClient />
+      </div>
     </Suspense>
   );
 }
