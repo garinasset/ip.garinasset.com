@@ -39,7 +39,7 @@ export default function ApiTryout({
         readOnly
         rows={1}
         value={`curl ${apiUrl}`}
-        className="box-border w-full resize-none overflow-hidden rounded-[0.5em] border border-[#dadce0] bg-white px-[1em] py-[0.875em] font-mono text-[0.9375em] leading-[1.6] text-[rgb(0,0,153)] shadow-[0_0.1875em_0.625em_0_rgba(31,31,31,0.08)] outline-none"
+        className="min-h-24 sm:min-h-20 md:min-h-8 lg:min-h-8 box-border w-full resize-none overflow-hidden rounded-[0.5em] border border-[#dadce0] bg-white px-[1em] py-[0.875em] font-mono text-[0.9375em] leading-[1.6] text-[rgb(0,0,153)] shadow-[0_0.1875em_0.625em_0_rgba(31,31,31,0.08)] outline-none"
       />
 
       {/* ============================== */}
@@ -62,7 +62,7 @@ export default function ApiTryout({
           readOnly
           rows={10}
           value={response}
-          className="box-border min-h-72 w-full resize-none overflow-hidden rounded-[0.5em] border border-[#dadce0] bg-white px-[1em] py-[0.875em] font-mono text-[0.9375em] leading-[1.6] text-[rgb(0,0,153)] shadow-[0_0.1875em_0.625em_0_rgba(31,31,31,0.08)] outline-none"
+          className="box-border min-h-104 sm:min-h-72 md:min-h-72 lg:min-h-72 w-full resize-none overflow-hidden rounded-[0.5em] border border-[#dadce0] bg-white px-[1em] py-[0.875em] font-mono text-[0.9375em] leading-[1.6] text-[rgb(0,0,153)] shadow-[0_0.1875em_0.625em_0_rgba(31,31,31,0.08)] outline-none"
         />
       </div>
     </div>
