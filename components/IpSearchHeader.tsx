@@ -2,7 +2,12 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { FormEvent, useEffect, useState } from "react";
+import {
+  FormEvent,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { useRouter } from "next/navigation";
 
 import {
@@ -14,10 +19,56 @@ interface IpSearchHeaderProps {
   initialIp?: string;
 }
 
+const MENU_LINKS = [
+  {
+    label: "首页",
+    href: "/",
+    external: false,
+  },
+  {
+    label: (
+      <>
+        API : <strong>免费</strong>
+      </>
+    ),
+    href: "https://api.garinasset.com/ip/redoc",
+    external: true,
+  },
+  {
+    label: (
+      <>
+        CC BY 4.0 : <strong>DB-IP</strong>
+      </>
+    ),
+    href: "https://db-ip.com/",
+    external: true,
+  },
+  {
+    label: (
+      <>
+        CC BY-SA 4.0 : <strong>GeoLite2</strong>
+      </>
+    ),
+    href: "https://www.maxmind.com/",
+    external: true,
+  },
+  {
+    label: (
+      <>
+        应用 & 接口 : <strong>嘉林数据</strong>
+      </>
+    ),
+    href: "https://api.garinasset.com",
+    external: true,
+  },
+];
+
 export default function IpSearchHeader({
   initialIp = "",
 }: IpSearchHeaderProps) {
   const router = useRouter();
+
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const [value, setValue] = useState(initialIp);
   const [placeholder, setPlaceholder] = useState("输入 IP 地址");
@@ -26,6 +77,36 @@ export default function IpSearchHeader({
   useEffect(() => {
     setValue(initialIp);
   }, [initialIp]);
+
+  /**
+   * 搜索框获得焦点时自动全选
+   */
+  function selectInput() {
+    inputRef.current?.select();
+  }
+
+  function showError(message: string) {
+    setError(true);
+
+    const oldValue = value;
+
+    setValue("");
+    setPlaceholder(message);
+
+    setTimeout(() => {
+      setValue(oldValue);
+
+      requestAnimationFrame(() => {
+        inputRef.current?.select();
+      });
+    }, 600);
+  }
+
+  function handleInput(nextValue: string) {
+    setValue(nextValue);
+    setError(false);
+    setPlaceholder("输入 IP 地址");
+  }
 
   function submit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -51,113 +132,149 @@ export default function IpSearchHeader({
     setError(false);
     setPlaceholder("输入 IP 地址");
 
-    router.push(
-      `/ip?ip=${encodeURIComponent(inputValue)}`
-    );
-  }
-
-  function showError(message: string) {
-    setError(true);
-
-    const oldValue = value;
-
-    setValue("");
-    setPlaceholder(message);
-
-    setTimeout(() => {
-      setValue(oldValue);
-    }, 600);
-  }
-
-  function handleInput(nextValue: string) {
-    setValue(nextValue);
-    setError(false);
-    setPlaceholder("输入 IP 地址");
+    router.push(`/ip?ip=${encodeURIComponent(inputValue)}`);
   }
 
   return (
-    <div className="flex w-full items-center justify-center gap-8 py-7 max-[700px]:flex-col max-[700px]:gap-4">
-      {/* Logo */}
-      <div className="flex shrink-0 items-center justify-center">
-        <Link href="/" title="返回主页">
-          <Image
-            src="/images/logo.png"
-            alt="IP 地理"
-            title="IP 地理 Logo"
-            width={120}
-            height={120}
-            priority
-            className="h-[7.5em] w-[7.5em] object-contain"
-          />
-        </Link>
-      </div>
+    <header className="w-full px-4 py-6">
+      <div
+        className="
+          mx-auto
+          grid
+          w-full
+          max-w-5xl
+          grid-cols-1
+          gap-5
 
-      {/* 右侧 */}
-      <div className="flex min-w-0 flex-1 flex-col gap-3.5">
-        {/* 菜单 */}
-        <div className="flex min-h-6 w-full flex-wrap items-center">
-          <div className="flex w-full flex-wrap items-center text-[12px] leading-[18px] text-[#000099]">
-            <Link
-              href="/"
-              className="mx-2 font-bold underline decoration-dashed underline-offset-4 first:ml-0"
-            >
-              首页
-            </Link>
+          md:grid-cols-[7.5rem_minmax(0,1fr)]
+          md:grid-rows-auto
+          md:gap-x-8
+          md:gap-y-3
+        "
+      >
+        {/* ================================================== */}
+        {/* Logo
+            桌面端：左侧，跨两行
+            移动端：第一行
+        */}
+        {/* ================================================== */}
+        <div
+          className="
+            flex
+            justify-center
 
-            <span>|</span>
-
-            <a
-              href="https://api.garinasset.com/ip/redoc"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mx-2 underline decoration-dashed underline-offset-4"
-            >
-              API : <strong>免费</strong>
-            </a>
-
-            <span>|</span>
-
-
-             <a
-              href="https://db-ip.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mx-2 underline decoration-dashed underline-offset-4"
-            >
-              数据库 : <strong>DB-IP</strong>
-            </a>
-
-            <a
-              href="https://www.maxmind.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mx-2 underline decoration-dashed underline-offset-4"
-            >
-              <strong>GeoLite2</strong>
-            </a>
-
-            <span>|</span>
-
-            <a
-              href="https://api.garinasset.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mx-2 underline decoration-dashed underline-offset-4"
-            >
-              应用 & 接口 : <strong>嘉林数据</strong>
-            </a>
-          </div>
+            md:row-span-2
+            md:items-start
+            md:justify-center
+          "
+        >
+          <Link href="/" title="返回主页">
+            <Image
+              src="/images/logo.png"
+              alt="IP 地理"
+              title="IP 地理 Logo"
+              width={120}
+              height={120}
+              priority
+              className="
+                h-auto
+                w-[7.5rem]
+                object-contain
+              "
+            />
+          </Link>
         </div>
 
-        {/* 搜索框 */}
+        {/* ================================================== */}
+        {/* 菜单
+            桌面端：右侧第一行
+            移动端：隐藏
+        */}
+        {/* ================================================== */}
+        <nav
+          aria-label="网站导航"
+          className="
+            hidden
+            items-center
+            text-xs
+            leading-[18px]
+            text-[#000099]
+
+            md:flex
+            md:min-h-6
+            md:flex-wrap
+          "
+        >
+          {MENU_LINKS.map((item, index) => (
+            <span
+              key={item.href}
+              className="flex items-center"
+            >
+              {index > 0 && (
+                <span className="mx-1.5 select-none">
+                  |
+                </span>
+              )}
+
+              {item.external ? (
+                <a
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="
+                    underline
+                    decoration-dashed
+                    underline-offset-4
+                    hover:decoration-solid
+                  "
+                >
+                  {item.label}
+                </a>
+              ) : (
+                <Link
+                  href={item.href}
+                  className="
+                    font-bold
+                    underline
+                    decoration-dashed
+                    underline-offset-4
+                    hover:decoration-solid
+                  "
+                >
+                  {item.label}
+                </Link>
+              )}
+            </span>
+          ))}
+        </nav>
+
+        {/* ================================================== */}
+        {/* 搜索
+            桌面端：右侧第二行
+            移动端：第二行
+        */}
+        {/* ================================================== */}
         <form
           onSubmit={submit}
-          className="flex w-full min-w-0 items-center gap-2.5"
           noValidate
+          className="
+            flex
+            w-full
+            min-w-0
+            flex-col
+            items-stretch
+            gap-3
+
+            md:flex-row
+            md:items-center
+          "
         >
+          {/* 搜索框 */}
           <input
+            ref={inputRef}
             value={value}
             onChange={(e) => handleInput(e.target.value)}
+            onFocus={selectInput}
             title="搜索"
             placeholder={placeholder}
             autoComplete="off"
@@ -166,24 +283,54 @@ export default function IpSearchHeader({
             inputMode="text"
             enterKeyHint="search"
             className={[
-              "h-[3.125em] min-w-0 flex-1 rounded-[1.625em]",
-              "border bg-white px-3 text-base text-[rgba(0,0,0,.87)]",
-              "outline-none shadow-[0_0.1875em_0.625em_0_rgba(31,31,31,.08)]",
+              "h-12 w-full min-w-0",
+              "rounded-full",
+              "border bg-white px-4",
+              "text-base text-[rgba(0,0,0,.87)]",
+              "outline-none",
+              "shadow-[0_3px_10px_0_rgba(31,31,31,.08)]",
               "placeholder:text-[#9aa0a6]",
+              "transition",
+              "focus:border-[#4285f4]",
+
               error
-                ? "border-[#d93025] shadow-[0_0_0.25em_rgba(217,48,37,.6)]"
+                ? "border-[#d93025] shadow-[0_0_4px_rgba(217,48,37,.6)]"
                 : "border-[#dadce0]",
+
+              "md:flex-1",
             ].join(" ")}
           />
 
+          {/* 查询按钮 */}
           <button
             type="submit"
-            className="h-[3.125em] min-w-[3.375em] shrink-0 rounded-xl border border-[#f8f9fa] bg-[#f8f9fa] px-4 text-sm font-medium text-[#3c4043] shadow-[0_0.1875em_0.625em_0_rgba(31,31,31,.08)] transition hover:border-[#dadce0] hover:text-[#202124] focus:border-[#4285f4] focus:outline-none"
+            className="
+              h-10
+              w-24
+              shrink-0
+              self-center
+              rounded-xl
+              border border-[#f8f9fa]
+              bg-[#f8f9fa]
+              px-5
+              my-4
+              text-sm
+              font-medium
+              text-[#3c4043]
+              shadow-[0_3px_10px_0_rgba(31,31,31,.08)]
+              transition
+
+              hover:border-[#dadce0]
+              hover:text-[#202124]
+
+              focus:border-[#4285f4]
+              focus:outline-none
+            "
           >
             查询
           </button>
         </form>
       </div>
-    </div>
+    </header>
   );
 }
