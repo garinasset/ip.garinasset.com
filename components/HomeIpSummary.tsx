@@ -17,11 +17,14 @@ interface ClientIpInfo {
   user_agent?: string;
 }
 
+const API_URL = "https://api.garinasset.com/ip/client";
+const REQUEST_TIMEOUT = 3000;
+const MAX_ATTEMPTS = 2;
+
 const textClass =
   "text-[0.75em] leading-[1.125em] text-[rgb(0,0,153)]";
 
-const valueClass =
-  `${textClass} font-bold`;
+const valueClass = `${textClass} font-bold`;
 
 function Section({
   title,
@@ -69,8 +72,9 @@ export default function HomeIpSummary() {
 
   useEffect(() => {
     let cancelled = false;
+    let activeController: AbortController | null = null;
 
-    const timer = window.setInterval(() => {
+    const dotTimer = window.setInterval(() => {
       setDots((current) => {
         if (current === "·") return "··";
         if (current === "··") return "···";
@@ -79,35 +83,59 @@ export default function HomeIpSummary() {
     }, 350);
 
     async function loadClientIp() {
-      try {
-        const response = await fetch(
-          "https://api.garinasset.com/ip/client",
-          {
+      for (let attempt = 0; attempt < MAX_ATTEMPTS; attempt++) {
+        if (cancelled) {
+          return;
+        }
+
+        const controller = new AbortController();
+        activeController = controller;
+
+        const timeout = window.setTimeout(() => {
+          controller.abort();
+        }, REQUEST_TIMEOUT);
+
+        try {
+          const response = await fetch(API_URL, {
             method: "GET",
             cache: "no-store",
+            signal: controller.signal,
+          });
+
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
           }
-        );
 
-        if (!response.ok) {
-          throw new Error(`HTTP ${response.status}`);
-        }
+          const result =
+            (await response.json()) as ClientIpInfo;
 
-        const result =
-          (await response.json()) as ClientIpInfo;
+          if (cancelled) {
+            return;
+          }
 
-        if (!cancelled) {
           setData(result);
           setError(false);
-        }
-      } catch (err) {
-        console.error("获取客户端 IP 失败:", err);
-
-        if (!cancelled) {
-          setError(true);
-        }
-      } finally {
-        if (!cancelled) {
           setLoading(false);
+
+          return;
+        } catch (err) {
+          if (cancelled) {
+            return;
+          }
+
+          // 第一次失败：立即进入第二次请求
+          if (attempt === MAX_ATTEMPTS - 1) {
+            console.error("获取客户端 IP 失败:", err);
+
+            setError(true);
+            setLoading(false);
+          }
+        } finally {
+          window.clearTimeout(timeout);
+
+          if (activeController === controller) {
+            activeController = null;
+          }
         }
       }
     }
@@ -116,13 +144,14 @@ export default function HomeIpSummary() {
 
     return () => {
       cancelled = true;
-      window.clearInterval(timer);
+
+      activeController?.abort();
+
+      window.clearInterval(dotTimer);
     };
   }, []);
 
-  function value(
-    actualValue: string | null | undefined
-  ) {
+  function value(actualValue: string | null | undefined) {
     if (loading) {
       return dots;
     }
@@ -151,7 +180,7 @@ export default function HomeIpSummary() {
   return (
     <div className="w-full px-4">
       <div className="mx-auto flex w-full max-w-[43em] flex-col items-center space-y-6 text-center">
-        
+
         {/* 您的 IP */}
         <Section title="您的 IP">
           <Value>
