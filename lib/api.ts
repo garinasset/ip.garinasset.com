@@ -13,27 +13,16 @@ export interface IpInfo {
   user_agent?: string;
 }
 
-async function fetchJson<T>(
-  url: string,
-  timeout = 3000
-): Promise<T> {
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), timeout);
+async function fetchJson<T>(url: string): Promise<T> {
+  const response = await fetch(url, {
+    method: "GET",
+  });
 
-  try {
-    const response = await fetch(url, {
-      method: "GET",
-      signal: controller.signal,
-    });
-
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status}`);
-    }
-
-    return await response.json() as T;
-  } finally {
-    clearTimeout(timer);
+  if (!response.ok) {
+    throw new Error(`HTTP ${response.status}`);
   }
+
+  return (await response.json()) as T;
 }
 
 export function fetchIpInfo(ip: string) {

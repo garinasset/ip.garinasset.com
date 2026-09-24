@@ -18,8 +18,6 @@ interface ClientIpInfo {
 }
 
 const API_URL = "https://api.garinasset.com/ip/client";
-const REQUEST_TIMEOUT = 3000;
-const MAX_ATTEMPTS = 2;
 
 const textClass =
   "text-[0.75em] leading-[1.125em] text-[rgb(0,0,153)]";
@@ -72,7 +70,6 @@ export default function HomeIpSummary() {
 
   useEffect(() => {
     let cancelled = false;
-    let activeController: AbortController | null = null;
 
     const dotTimer = window.setInterval(() => {
       setDots((current) => {
@@ -83,59 +80,35 @@ export default function HomeIpSummary() {
     }, 350);
 
     async function loadClientIp() {
-      for (let attempt = 0; attempt < MAX_ATTEMPTS; attempt++) {
+      try {
+        const response = await fetch(API_URL, {
+          method: "GET",
+          cache: "no-store",
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+
+        const result =
+          (await response.json()) as ClientIpInfo;
+
         if (cancelled) {
           return;
         }
 
-        const controller = new AbortController();
-        activeController = controller;
-
-        const timeout = window.setTimeout(() => {
-          controller.abort();
-        }, REQUEST_TIMEOUT);
-
-        try {
-          const response = await fetch(API_URL, {
-            method: "GET",
-            cache: "no-store",
-            signal: controller.signal,
-          });
-
-          if (!response.ok) {
-            throw new Error(`HTTP ${response.status}`);
-          }
-
-          const result =
-            (await response.json()) as ClientIpInfo;
-
-          if (cancelled) {
-            return;
-          }
-
-          setData(result);
-          setError(false);
-          setLoading(false);
-
+        setData(result);
+        setError(false);
+      } catch (err) {
+        if (cancelled) {
           return;
-        } catch (err) {
-          if (cancelled) {
-            return;
-          }
+        }
 
-          // 第一次失败：立即进入第二次请求
-          if (attempt === MAX_ATTEMPTS - 1) {
-            console.error("获取客户端 IP 失败:", err);
-
-            setError(true);
-            setLoading(false);
-          }
-        } finally {
-          window.clearTimeout(timeout);
-
-          if (activeController === controller) {
-            activeController = null;
-          }
+        console.error("获取客户端 IP 失败:", err);
+        setError(true);
+      } finally {
+        if (!cancelled) {
+          setLoading(false);
         }
       }
     }
@@ -144,9 +117,6 @@ export default function HomeIpSummary() {
 
     return () => {
       cancelled = true;
-
-      activeController?.abort();
-
       window.clearInterval(dotTimer);
     };
   }, []);
