@@ -141,12 +141,12 @@ export default function HomeIpSummary() {
             {loading || error || !data?.ip ? (
               value(data?.ip)
             ) : (
-              <Link
+              <a
                 href={`/ip?ip=${encodeURIComponent(data.ip)}`}
                 className="underline decoration-dashed decoration-[rgba(0,0,153,0.45)] underline-offset-[0.25em] hover:decoration-solid"
               >
                 {data.ip}
-              </Link>
+              </a>
             )}
           </Value>
         </Section>

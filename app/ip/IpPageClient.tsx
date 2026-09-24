@@ -9,6 +9,7 @@ import ApiTryout from "@/components/ApiTryout";
 
 import { isValidIpAddress } from "@/lib/ip";
 import { fetchIpInfo } from "@/lib/api";
+import Footer from "@/components/Footer";
 
 interface IpInfo {
   ip?: string;
@@ -101,14 +102,18 @@ export default function IpPageClient() {
         <IpSearchHeader initialIp={queryIp} />
 
         {/* 查询结果 */}
-        <div className="flex w-full flex-col items-center pb-6">
-          <div className="box-border flex w-full max-w-[54rem] flex-col items-center rounded-[0.875em] bg-[#fafafa] px-4 pb-6 pt-1">
+        <div className="flex w-full flex-col items-center space-y-4 pb-6">
+          <div className="box-border flex w-full max-w-[54rem] flex-col items-center rounded-[0.875em] bg-[#fafafa] px-4 pt-1">
 
             <IpResult
               ip={queryIp}
               data={data}
               loading={loading}
             />
+
+          </div>
+          <div className="box-border flex w-full max-w-[54rem] flex-col items-center rounded-[0.875em] bg-[#fafafa] px-4 pb-6 pt-1">
+
 
             <ApiTryout
               ip={queryIp}
@@ -123,6 +128,11 @@ export default function IpPageClient() {
             )}
 
           </div>
+        </div>
+
+        {/* Footer */}
+        <div className="block lg:hidden">
+          <Footer />
         </div>
 
       </div>

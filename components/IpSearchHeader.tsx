@@ -155,26 +155,27 @@ export default function IpSearchHeader({
           grid-cols-1
           gap-5
 
-          md:grid-cols-[7.5rem_minmax(0,1fr)]
-          md:grid-rows-auto
-          md:gap-x-8
-          md:gap-y-1
+          lg:grid-cols-[7.5rem_minmax(0,1fr)]
+          lg:grid-rows-auto
+          lg:gap-x-8
+          lg:gap-y-1
         "
       >
         {/* ================================================== */}
         {/* Logo
-            桌面端：左侧，跨两行
-            移动端：第一行
+            手机 / iPad：第一行
+            PC：左侧，跨两行
         */}
         {/* ================================================== */}
+
         <div
           className="
             flex
             justify-center
 
-            md:row-span-2
-            md:items-start
-            md:justify-center
+            lg:row-span-2
+            lg:items-start
+            lg:justify-center
           "
         >
           <Link href="/" title="返回主页">
@@ -196,10 +197,12 @@ export default function IpSearchHeader({
 
         {/* ================================================== */}
         {/* 菜单
-            桌面端：右侧第一行
-            移动端：隐藏
+            手机：隐藏
+            iPad：隐藏
+            PC：显示
         */}
         {/* ================================================== */}
+
         <nav
           aria-label="网站导航"
           className="
@@ -209,8 +212,8 @@ export default function IpSearchHeader({
             leading-[18px]
             text-[#000099]
 
-            md:flex
-            md:flex-wrap
+            lg:flex
+            lg:flex-wrap
           "
         >
           {MENU_LINKS.map((item, index) => (
@@ -258,10 +261,11 @@ export default function IpSearchHeader({
 
         {/* ================================================== */}
         {/* 搜索
-            桌面端：右侧第二行
-            移动端：第二行
+            手机 / iPad：第二行，一列
+            PC：右侧第二行，横向排列
         */}
         {/* ================================================== */}
+
         <form
           onSubmit={submit}
           noValidate
@@ -273,12 +277,13 @@ export default function IpSearchHeader({
             items-center
             gap-3
 
-            md:flex-row
-            md:items-center
-            md:gap-2.5
+            lg:flex-row
+            lg:items-center
+            lg:gap-2.5
           "
         >
           {/* 搜索框 */}
+
           <input
             ref={inputRef}
             value={value}
@@ -306,11 +311,12 @@ export default function IpSearchHeader({
                 ? "border-[#d93025] shadow-[0_0_0.25em_rgba(217,48,37,.6)]"
                 : "border-[#dadce0]",
 
-              "md:flex-1",
+              "lg:flex-1",
             ].join(" ")}
           />
 
           {/* 查询按钮 */}
+
           <button
             type="submit"
             className="
