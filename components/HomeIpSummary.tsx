@@ -3,21 +3,12 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
+import {
+  fetchClientIp,
+  type IpInfo,
+} from "@/lib/api";
+
 import { countryCodeToFlag, toDMS } from "@/lib/ip";
-
-interface ClientIpInfo {
-  ip?: string;
-  country?: string;
-  region?: string;
-  city?: string;
-  longitude?: number | null;
-  latitude?: number | null;
-  ISP?: string;
-  ASO?: string;
-  user_agent?: string;
-}
-
-const API_URL = "https://api.garinasset.com/ip/client";
 
 const textClass =
   "text-[0.75em] leading-[1.125em] text-[rgb(0,0,153)]";
@@ -63,7 +54,7 @@ function Value({
 }
 
 export default function HomeIpSummary() {
-  const [data, setData] = useState<ClientIpInfo | null>(null);
+  const [data, setData] = useState<IpInfo | null>(null);
   const [loading, setLoading] = useState(true);
   const [dots, setDots] = useState("·");
   const [error, setError] = useState(false);
@@ -71,6 +62,7 @@ export default function HomeIpSummary() {
   useEffect(() => {
     let cancelled = false;
 
+    // 加载期间显示动态省略号。
     const dotTimer = window.setInterval(() => {
       setDots((current) => {
         if (current === "·") return "··";
@@ -81,18 +73,10 @@ export default function HomeIpSummary() {
 
     async function loadClientIp() {
       try {
-        const response = await fetch(API_URL, {
-          method: "GET",
-          cache: "no-store",
-        });
+        // API 请求统一由 lib/api.ts 处理。
+        const result = await fetchClientIp();
 
-        if (!response.ok) {
-          throw new Error(`HTTP ${response.status}`);
-        }
-
-        const result =
-          (await response.json()) as ClientIpInfo;
-
+        // 组件已经卸载时，不再更新 React 状态。
         if (cancelled) {
           return;
         }
