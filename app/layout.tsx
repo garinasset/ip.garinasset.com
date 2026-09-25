@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "IP 地理 - 嘉林数据",
   description:
-    "IP 地理，可快速查询 IP 地址的地理位置、国家、城市、经纬度、ASN 和 ASO 信息。",
+    "IP 地理，可快速查询 IP 地址 所在国家、城市、经纬度、ISP、ASN、ASO 信息。",
 };
 
 export default function RootLayout({

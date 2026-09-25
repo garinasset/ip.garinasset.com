@@ -1,6 +1,6 @@
-"use client";
 
 import Link from "next/link";
+
 import { useEffect, useState } from "react";
 
 import {
@@ -53,7 +53,7 @@ function Value({
   );
 }
 
-export default function HomeIpSummary() {
+export default function ContentClient() {
   const [data, setData] = useState<IpInfo | null>(null);
   const [loading, setLoading] = useState(true);
   const [dots, setDots] = useState("·");
@@ -141,12 +141,12 @@ export default function HomeIpSummary() {
             {loading || error || !data?.ip ? (
               value(data?.ip)
             ) : (
-              <a
-                href={`/ip?ip=${encodeURIComponent(data.ip)}`}
+              <Link
+                href={`/?ip=${encodeURIComponent(data.ip)}`}
                 className="underline decoration-dashed decoration-[rgba(0,0,153,0.45)] underline-offset-[0.25em] hover:decoration-solid"
               >
                 {data.ip}
-              </a>
+              </Link>
             )}
           </Value>
         </Section>

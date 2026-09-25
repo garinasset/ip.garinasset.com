@@ -1,30 +1,4 @@
-const links = [
-  {
-    label: "API",
-    value: "免费",
-    href: "https://api.garinasset.com/ip/redoc",
-  },
-  {
-    label: " CC BY 4.0",
-    value: "DB-IP",
-    href: "https://db-ip.com/",
-  },
-  {
-    label: "CC BY-SA 4.0",
-    value: "GeoLite2",
-    href: "https://www.maxmind.com/",
-  },
-  {
-    label: "MIT",
-    value: "China Operator IP",
-    href: "https://china-operator-ip.yfgao.com/",
-  },
-  {
-    label: "应用 & 接口",
-    value: "嘉林数据",
-    href: "https://api.garinasset.com",
-  },
-]
+import { SITE_LINKS } from "@/components/siteLinks";
 
 export default function Footer() {
   return (
@@ -33,7 +7,7 @@ export default function Footer() {
         aria-label="页脚导航"
         className="mx-auto flex max-w-[43rem] flex-wrap items-center justify-center gap-x-3 gap-y-2 text-center text-xs leading-5 text-[#000099]"
       >
-        {links.map(({ label, value, href }) => (
+        {SITE_LINKS.map(({ label, value, href }) => (
           <a
             key={href}
             href={href}
@@ -41,11 +15,10 @@ export default function Footer() {
             rel="noopener noreferrer"
             className="whitespace-nowrap underline decoration-dashed underline-offset-4 hover:decoration-solid"
           >
-            {label && `${label} : `}
-            <strong>{value}</strong>
+            {label} : <strong>{value}</strong>
           </a>
         ))}
       </nav>
     </footer>
-  )
+  );
 }

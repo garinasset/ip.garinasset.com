@@ -1,1 +1,13 @@
 @import "tailwindcss";
+
+.page-transition {
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: clip;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-transition * {
+    scroll-behavior: auto !important;
+  }
+}

@@ -19,17 +19,18 @@ interface IpInfo {
   ASO?: string;
 }
 
-interface IpResultProps {
+interface ContentIpProps {
   ip: string;
   data: IpInfo | null;
   loading: boolean;
 }
 
-export default function IpResult({
+export default function ContentIp
+({
   ip,
   data,
   loading,
-}: IpResultProps) {
+}: ContentIpProps) {
   return (
     <div className="mt-[0.875em] mb-16 box-border flex w-full max-w-[52rem] flex-col items-start p-0 text-base">
       <ResultItem
