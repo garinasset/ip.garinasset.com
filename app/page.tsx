@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
-import Layout from "@/components/Layout";
 import Brand from "@/components/Brand";
 import Navigation from "@/components/Navigation";
 import Search from "@/components/Search";
@@ -76,13 +75,10 @@ export default function HomePage() {
   }, [queryIp]);
 
   return (
-    <Layout mode={mode}>
+    <>
       {mode === "home" ? (
         <main className="flex min-h-screen w-full flex-col font-[Arial,sans-serif]">
-          <div
-            data-flip="brand"
-            className="flex min-h-[5.75em] flex-col items-center pt-[3.75em]"
-          >
+          <div className="flex min-h-[5.75em] flex-col items-center pt-[3.75em]">
             <Brand mode="home" />
           </div>
 
@@ -90,11 +86,11 @@ export default function HomePage() {
             <Search mode="home" />
           </div>
 
-          <div data-flip="content">
+          <div>
             <ContentClient />
           </div>
 
-          <div data-flip="footer">
+          <div>
             <Footer />
           </div>
         </main>
@@ -109,14 +105,14 @@ export default function HomePage() {
 
                 <Navigation />
 
-                <Search mode="query" initialIp={queryIp} />
+                <Search
+                  mode="query"
+                  initialIp={queryIp}
+                />
               </div>
             </header>
 
-            <div
-              data-flip="content"
-              className="flex w-full flex-col items-center space-y-4 pb-6"
-            >
+            <div className="flex w-full flex-col items-center space-y-4 pb-6">
               <div className="box-border flex w-full max-w-[54rem] flex-col items-center rounded-[0.875em] bg-[#fafafa] px-4 pt-1">
                 <ContentIp
                   ip={queryIp}
@@ -140,12 +136,12 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div data-flip="footer" className="block lg:hidden">
+            <div className="block lg:hidden">
               <Footer />
             </div>
           </div>
         </main>
       )}
-    </Layout>
+    </>
   );
 }

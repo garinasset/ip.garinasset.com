@@ -1,4 +1,4 @@
-import { SITE_LINKS } from "@/components/siteLinks";
+import { SITE_LINKS } from "@/config/siteLinks";
 
 export default function Footer() {
   return (
