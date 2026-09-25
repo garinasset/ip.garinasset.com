@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
 import Brand from "@/components/Brand";
@@ -14,7 +14,7 @@ import Footer from "@/components/Footer";
 import { fetchIpInfo, type IpInfo } from "@/lib/api";
 import { isValidIpAddress } from "@/lib/ip";
 
-export default function HomePage() {
+function HomePage() {
   const searchParams = useSearchParams();
 
   const queryIp = searchParams.get("ip") ?? "";
@@ -143,5 +143,13 @@ export default function HomePage() {
         </main>
       )}
     </>
+  );
+}
+
+export default function Page() {
+  return (
+    <Suspense fallback={null}>
+      <HomePage />
+    </Suspense>
   );
 }
