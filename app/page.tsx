@@ -34,7 +34,7 @@ function HomePage() {
     if (!isValidIpAddress(queryIp)) {
       setData(null);
       setLoading(false);
-      setError("URL 中的 IP 地址不是有效 IP 地址");
+      setError("❌ URL 中的 IP 地址不是有效 IP 地址");
       return;
     }
 
@@ -106,6 +106,13 @@ function HomePage() {
 
           </header>
 
+          {/* Error section */}
+          {error && (
+            <div className="text-center text-red-600">
+              {error}
+            </div>
+          )}
+
           {/* Content section */}
           <div className="box-border px-4 lg:px-8 py-4 flex w-full max-w-[54rem] flex-col items-center rounded-[0.875em] bg-[#fafafa]">
             <ContentIp
@@ -126,12 +133,7 @@ function HomePage() {
           </div>
 
 
-          {/* Error section */}
-          {error && (
-            <div className="m-4 text-center text-red-600">
-              {error}
-            </div>
-          )}
+
 
           {/* Footer section */}
           <div className="mt-auto pb-4">
