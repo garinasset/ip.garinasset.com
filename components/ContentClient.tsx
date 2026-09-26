@@ -142,7 +142,7 @@ export default function ContentClient() {
               value(data?.ip)
             ) : (
               <Link
-                href={`/?ip=${encodeURIComponent(data.ip)}`}
+                href={`/?ip=${data.ip}`}
                 className="underline decoration-dashed decoration-[rgba(0,0,153,0.45)] underline-offset-[0.25em] hover:decoration-solid"
               >
                 {data.ip}

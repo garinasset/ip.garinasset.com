@@ -26,13 +26,13 @@ interface ContentIpProps {
 }
 
 export default function ContentIp
-({
-  ip,
-  data,
-  loading,
-}: ContentIpProps) {
+  ({
+    ip,
+    data,
+    loading,
+  }: ContentIpProps) {
   return (
-    <div className="mt-[0.875em] mb-16 box-border flex w-full max-w-[52rem] flex-col items-start p-0 text-base">
+    <div className="flex w-full max-w-[52rem] flex-col gap-3 items-start text-base">
       <ResultItem
         label="IP:"
         value={data?.ip ?? ip}
@@ -45,8 +45,8 @@ export default function ContentIp
             ? undefined
             : data?.country
               ? `${countryCodeToFlag(
-                  data.country
-                )} ${data.country.toUpperCase()}`
+                data.country
+              )} ${data.country.toUpperCase()}`
               : "None"
         }
       />
@@ -130,23 +130,22 @@ function ResultItem({
   value?: string | number;
 }) {
   return (
-    <div className="box-border px-4 pt-[0.625em]">
-      <div className="inline-flex shrink items-start gap-[0.625em] border-b border-dashed border-[rgba(0,0,153,0.12)] pb-[0.625em] box-border">
-        {/* 左边 Key */}
-        <div className="min-w-[5.5rem] font-bold leading-[1.5] text-[rgb(0,0,153)]">
-          {label}
-        </div>
+    <div className="inline-flex shrink items-start gap-2 border-b border-dashed border-[rgba(0,0,153,0.12)] box-border">
+      {/* 左边 Key */}
+      <div className="min-w-[5.5rem] font-bold text-[rgb(0,0,153)]">
+        {label}
+      </div>
 
-        {/* 右边 Value */}
-        <div className="inline-block max-w-full break-all text-left leading-[1.5] text-[rgb(0,0,153)]">
-          {value === undefined ? (
-            <DotAnimation />
-          ) : (
-            value
-          )}
-        </div>
+      {/* 右边 Value */}
+      <div className="inline-block max-w-full break-all text-left leading-[1.5] text-[rgb(0,0,153)]">
+        {value === undefined ? (
+          <DotAnimation />
+        ) : (
+          value
+        )}
       </div>
     </div>
+
   );
 }
 

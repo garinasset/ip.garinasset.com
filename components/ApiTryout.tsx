@@ -59,13 +59,13 @@ export default function ApiTryout({
       : JSON.stringify(data, null, 2);
 
   return (
-    <div className="mt-[1.25em] w-full max-w-[52rem] box-border">
+    <div className="flex flex-col space-y-4 w-full max-w-[52rem] box-border">
 
       {/* ============================== */}
       {/* 试试接口 */}
       {/* ============================== */}
 
-      <h3 className="m-0 mb-[0.5em] text-base font-bold leading-[1.5] text-[rgb(0,0,153)]">
+      <h3 className="text-base font-bold leading-[1.5] text-[rgb(0,0,153)]">
         <a
           href="https://api.garinasset.com/ip/redoc"
           target="_blank"
@@ -85,8 +85,8 @@ export default function ApiTryout({
       {/* 响应内容 */}
       {/* ============================== */}
 
-      <div className="mt-[1.25em] w-full">
-        <h3 className="m-0 mb-[0.5em] text-base font-bold leading-[1.5] text-[rgb(0,0,153)]">
+
+        <h3 className="text-base font-bold leading-[1.5] text-[rgb(0,0,153)]">
           <a
             href={data ? apiUrl : "#"}
             target="_blank"
@@ -102,6 +102,5 @@ export default function ApiTryout({
           minHeight={288}
         />
       </div>
-    </div>
   );
 }

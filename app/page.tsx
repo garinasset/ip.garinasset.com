@@ -77,69 +77,69 @@ function HomePage() {
   return (
     <>
       {mode === "home" ? (
-        <main className="flex min-h-screen w-full flex-col font-[Arial,sans-serif]">
-          <div className="flex min-h-[5.75em] flex-col items-center pt-[3.75em]">
-            <Brand mode="home" />
-          </div>
+        <main className="flex min-h-screen w-full flex-col items-center py-16 px-4 gap-4 font-[Arial,sans-serif]">
 
-          <div className="flex w-full flex-col items-center px-4 py-5">
+          <Brand mode="home" />
+          <div className="w-full max-w-176">
             <Search mode="home" />
           </div>
 
-          <div>
-            <ContentClient />
-          </div>
+          <ContentClient />
 
-          <div>
-            <Footer />
-          </div>
+          <Footer />
+
+
         </main>
       ) : (
-        <main className="min-h-screen w-full font-[Arial,sans-serif]">
-          <div className="mx-auto w-full px-6 max-[600px]:px-4">
-            <header className="w-full px-4 py-6">
-              <div className="mx-auto grid w-full max-w-5xl grid-cols-1 gap-5 lg:grid-cols-[7.5rem_minmax(0,1fr)] lg:grid-rows-auto lg:gap-x-8 lg:gap-y-1">
-                <div className="flex justify-center lg:row-span-2 lg:items-start lg:justify-center">
-                  <Brand mode="query" />
-                </div>
+        <main className="min-h-screen w-full flex flex-col items-center p-4 sm:px-16 lg:p-8 gap-6 font-[Arial,sans-serif]">
 
-                <Navigation />
+          {/* Header section */}
+          <header className="mx-auto flex w-full max-w-5xl flex-col items-center gap-5 lg:flex-row lg:items-center lg:gap-8">
 
-                <Search
-                  mode="query"
-                  initialIp={queryIp}
-                />
-              </div>
-            </header>
-
-            <div className="flex w-full flex-col items-center space-y-4 pb-6">
-              <div className="box-border flex w-full max-w-[54rem] flex-col items-center rounded-[0.875em] bg-[#fafafa] px-4 pt-1">
-                <ContentIp
-                  ip={queryIp}
-                  data={data}
-                  loading={loading}
-                />
-              </div>
-
-              <div className="box-border flex w-full max-w-[54rem] flex-col items-center rounded-[0.875em] bg-[#fafafa] px-4 pb-6 pt-1">
-                <ApiTryout
-                  ip={queryIp}
-                  data={data}
-                  loading={loading}
-                />
-
-                {error && (
-                  <div className="mt-4 text-center text-red-600">
-                    {error}
-                  </div>
-                )}
-              </div>
+            <div className="flex w-[7.5rem] shrink-0 justify-center">
+              <Brand mode="query" />
             </div>
 
-            <div className="block lg:hidden">
-              <Footer />
-            </div>
+            <Search
+              mode="query"
+              initialIp={queryIp}
+            />
+
+          </header>
+
+          {/* Content section */}
+          <div className="box-border px-4 lg:px-8 py-4 flex w-full max-w-[54rem] flex-col items-center rounded-[0.875em] bg-[#fafafa]">
+            <ContentIp
+              ip={queryIp}
+              data={data}
+              loading={loading}
+            />
           </div>
+
+          {/* API Tryout section */}
+          <div className="box-border px-4 lg:px-8 py-4 flex w-full max-w-[54rem] flex-col items-center rounded-[0.875em] bg-[#fafafa]">
+            <ApiTryout
+              ip={queryIp}
+              data={data}
+              loading={loading}
+            />
+
+          </div>
+
+
+          {/* Error section */}
+          {error && (
+            <div className="m-4 text-center text-red-600">
+              {error}
+            </div>
+          )}
+
+          {/* Footer section */}
+          <div className="mt-auto pb-4">
+            <Footer />
+          </div>
+
+
         </main>
       )}
     </>
