@@ -4,7 +4,6 @@ import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
 import Brand from "@/components/Brand";
-import Navigation from "@/components/Navigation";
 import Search from "@/components/Search";
 import ContentClient from "@/components/ContentClient";
 import ContentIp from "@/components/ContentIp";
