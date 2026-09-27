@@ -2,14 +2,9 @@
 
 import { useEffect, useRef } from "react";
 
-interface ApiResponse {
-  country?: string;
-  [key: string]: unknown;
-}
-
 interface ApiTryoutProps {
   ip: string;
-  data: ApiResponse | null;
+  data: unknown;
   loading: boolean;
 }
 
@@ -63,13 +58,8 @@ export default function ApiTryout({
       ? ""
       : JSON.stringify(data, null, 2);
 
-  const responseCountry =
-    loading || !data
-      ? ""
-      : data.country ?? "";
-
   return (
-    <div className="flex w-full max-w-[52rem] flex-col space-y-4 box-border">
+    <div className="flex flex-col space-y-4 w-full max-w-[52rem] box-border">
 
       {/* ============================== */}
       {/* 试试接口 */}
@@ -95,61 +85,24 @@ export default function ApiTryout({
       {/* 响应内容 */}
       {/* ============================== */}
 
-      <h3 className="text-base font-bold leading-[1.5] text-[rgb(0,0,153)]">
-        <a
-          href={data ? apiUrl : "#"}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-inherit underline decoration-dashed decoration-[rgba(0,0,153,0.35)] underline-offset-[0.2em]"
-        >
-          响应内容
-        </a>
-      </h3>
 
-      <AutoResizeTextarea
-        value={response}
-        minHeight={288}
-      />
+        <h3 className="text-base font-bold leading-[1.5] text-[rgb(0,0,153)]">
+          <a
+            href={data ? apiUrl : "#"}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-inherit underline decoration-dashed decoration-[rgba(0,0,153,0.35)] underline-offset-[0.2em]"
+          >
+            响应内容
+          </a>
+        </h3>
 
-      {/* ============================== */}
-      {/* 试试接口 (返回国家代码) */}
-      {/* ============================== */}
+        <AutoResizeTextarea
+          value={response}
+          minHeight={288}
+        />
+      </div>
 
-      {/* <h3 className="text-base font-bold leading-[1.5] text-[rgb(0,0,153)]">
-        <a
-          href="https://api.garinasset.com/ip/redoc"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-inherit underline decoration-dashed decoration-[rgba(0,0,153,0.35)] underline-offset-[0.2em]"
-        >
-          试试接口
-        </a>
-      </h3>
-
-      <AutoResizeTextarea
-        value={`curl ${apiUrl}/country`}
-        minHeight={32}
-      /> */}
-
-      {/* ============================== */}
-      {/* 响应内容 (返回国家代码) */}
-      {/* ============================== */}
-
-      {/* <h3 className="text-base font-bold leading-[1.5] text-[rgb(0,0,153)]">
-        <a
-          href={data ? `${apiUrl}/country` : "#"}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-inherit underline decoration-dashed decoration-[rgba(0,0,153,0.35)] underline-offset-[0.2em]"
-        >
-          响应内容
-        </a>
-      </h3>
-
-      <AutoResizeTextarea
-        value={responseCountry}
-        minHeight={32}
-      /> */}
-    </div>
+      
   );
 }
