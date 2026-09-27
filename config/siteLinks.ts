@@ -34,6 +34,6 @@ export const SITE_LINKS = [
   {
     label: "",
     value: "联系我们",
-    href: "mailto:contact@garinasset.com",
+    href: "mailto:contact@garinasset.com?subject=IP 地理",
   },
 ] as const;
