@@ -4,7 +4,11 @@ export const SITE_LINKS = [
     value: "首页",
     href: "/",
   },
-
+  {
+    label: "安全",
+    value: "开放源代码",
+    href: "https://github.com/garinasset/ip.garinasset.com",
+  },
 
   {
     label: "CC BY 4.0",
@@ -22,7 +26,7 @@ export const SITE_LINKS = [
     href: "https://china-operator-ip.yfgao.com/",
   },
   {
-    label: "",
+    label: "开发者",
     value: "API 文档",
     href: "https://api.garinasset.com/ip/redoc",
   },
