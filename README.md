@@ -26,7 +26,7 @@
 
 [https://ip.garinasset.com](https://ip.garinasset.com)
 
-首页和查询页按请求服务端渲染，Logo 与搜索框包含在首屏 HTML 中；IP 数据仍由浏览器异步获取。页面不再由 Next.js 静态预生成，部署时需留意 CDN 缓存和服务器负载。
+首页和查询页按请求服务端渲染，Logo 与搜索框包含在首屏 HTML 中；IP 数据仍由浏览器异步获取。
 
 “您的 IP”通过浏览器分别请求 IPv4 和 IPv6 接口；接口不可达、响应无效或请求超时时，对应地址显示 `None`。
 
