@@ -20,6 +20,16 @@ export default function Search({ mode, initialIp = "" }: SearchProps) {
     setValue(initialIp);
   }, [initialIp]);
 
+  useEffect(() => {
+    if (
+      mode === "home" &&
+      window.matchMedia("(hover: hover) and (pointer: fine)").matches &&
+      document.activeElement === document.body
+    ) {
+      inputRef.current?.focus();
+    }
+  }, [mode]);
+
   function showError(message: string) {
     const oldValue = value;
     setError(true);
@@ -101,7 +111,6 @@ export default function Search({ mode, initialIp = "" }: SearchProps) {
             autoCapitalize="off"
             inputMode="text"
             enterKeyHint="search"
-            autoFocus={!query}
             className={[
               "h-[3.125em] min-w-0 flex-1",
               "bg-transparent px-0",
