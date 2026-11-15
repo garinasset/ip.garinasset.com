@@ -22,6 +22,10 @@ export function isValidIpAddress(value: string): boolean {
   }
 
   // IPv6
+  if (!/^[\da-f:.]+$/i.test(value)) {
+    return false;
+  }
+
   try {
     new URL(`http://[${value}]/`);
     return true;

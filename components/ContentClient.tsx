@@ -169,7 +169,7 @@ export default function ContentClient() {
                 <Value>
                   {address && address !== "None" ? (
                     <Link
-                      href={`/?ip=${encodeURIComponent(address)}`}
+                      href={`/${address}`}
                       className="underline decoration-dashed decoration-[rgba(0,0,153,0.45)] underline-offset-[0.25em] hover:decoration-solid"
                     >
                       {address}

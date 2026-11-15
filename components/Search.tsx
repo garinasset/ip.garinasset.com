@@ -50,7 +50,7 @@ export default function Search({ mode, initialIp = "" }: SearchProps) {
 
     setError(false);
     setPlaceholder("输入 IP 地址");
-    router.push(`/?ip=${inputValue}`);
+    router.push(`/${inputValue}`);
   }
 
   const query = mode === "query";
