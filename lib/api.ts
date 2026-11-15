@@ -1,4 +1,11 @@
+import { isValidIpAddress } from "@/lib/ip";
+
 const API_BASE = "https://api.garinasset.com";
+
+const CLIENT_IP_ENDPOINTS = {
+  IPv4: "https://ip64.onrender.com/ip64/",
+  IPv6: "https://ip64.garinasset.com:8443/ip/",
+};
 
 export interface IpInfo {
   ip?: string;
@@ -46,6 +53,27 @@ export function fetchClientIp() {
       cache: "no-store",
     }
   );
+}
+
+export async function fetchClientIpAddress(
+  version: keyof typeof CLIENT_IP_ENDPOINTS,
+  signal: AbortSignal,
+) {
+  const response = await fetch(CLIENT_IP_ENDPOINTS[version], {
+    cache: "no-store",
+    signal,
+  });
+
+  if (!response.ok) {
+    throw new Error(`HTTP ${response.status}`);
+  }
+
+  const ip = (await response.text()).trim();
+  if (!isValidIpAddress(ip) || (version === "IPv6") !== ip.includes(":")) {
+    throw new Error(`Invalid ${version} address returned by the endpoint`);
+  }
+
+  return ip;
 }
 
 /**

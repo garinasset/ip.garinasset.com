@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 
 import {
   fetchClientIp,
+  fetchClientIpAddress,
   type IpInfo,
 } from "@/lib/api";
 
@@ -58,9 +59,13 @@ export default function ContentClient() {
   const [loading, setLoading] = useState(true);
   const [dots, setDots] = useState("·");
   const [error, setError] = useState(false);
+  const [ipv4, setIpv4] = useState<string | null>(null);
+  const [ipv6, setIpv6] = useState<string | null>(null);
 
   useEffect(() => {
     let cancelled = false;
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), 60000);
 
     // 加载期间显示动态省略号。
     const dotTimer = window.setInterval(() => {
@@ -99,8 +104,30 @@ export default function ContentClient() {
 
     loadClientIp();
 
+    async function loadAddress(
+      version: "IPv4" | "IPv6",
+      setAddress: (address: string) => void,
+    ) {
+      try {
+        const address = await fetchClientIpAddress(version, controller.signal);
+        if (!cancelled) {
+          setAddress(address);
+        }
+      } catch (err) {
+        if (!cancelled) {
+          console.error(`获取 ${version} 地址失败:`, err);
+          setAddress("None");
+        }
+      }
+    }
+
+    void loadAddress("IPv4", setIpv4);
+    void loadAddress("IPv6", setIpv6);
+
     return () => {
       cancelled = true;
+      controller.abort();
+      window.clearTimeout(timeout);
       window.clearInterval(dotTimer);
     };
   }, []);
@@ -137,18 +164,32 @@ export default function ContentClient() {
 
         {/* 您的 IP */}
         <Section title="您的 IP">
-          <Value>
-            {loading || error || !data?.ip ? (
-              value(data?.ip)
-            ) : (
-              <Link
-                href={`/?ip=${data.ip}`}
-                className="underline decoration-dashed decoration-[rgba(0,0,153,0.45)] underline-offset-[0.25em] hover:decoration-solid"
-              >
-                {data.ip}
-              </Link>
-            )}
-          </Value>
+          {(["IPv4", "IPv6"] as const).map((version) => {
+            const address = version === "IPv4" ? ipv4 : ipv6;
+            return (
+              <div key={version}>
+                <span
+                  className={`inline-block rounded px-1.5 py-0.5 text-[11px] leading-[1.25] font-bold text-white ${
+                    version === "IPv4" ? "bg-[#b45309]" : "bg-[#1d4ed8]"
+                  }`}
+                >
+                  {version}
+                </span>
+                <Value>
+                  {address && address !== "None" ? (
+                    <Link
+                      href={`/?ip=${encodeURIComponent(address)}`}
+                      className="underline decoration-dashed decoration-[rgba(0,0,153,0.45)] underline-offset-[0.25em] hover:decoration-solid"
+                    >
+                      {address}
+                    </Link>
+                  ) : (
+                    address ?? dots
+                  )}
+                </Value>
+              </div>
+            );
+          })}
         </Section>
 
         {/* 地理信息 */}

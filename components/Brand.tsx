@@ -19,7 +19,7 @@ export default function Brand({ mode }: BrandProps) {
           sizes={mode === "home" ? "(max-width: 600px) 7em, 16em" : "120px"}
           className={
             mode === "home"
-              ? "h-auto w-auto max-h-[16em] max-w-[16em] object-contain max-[600px]:max-h-[7em] max-[600px]:max-w-[7em]"
+              ? "h-[16em] w-[16em] object-contain max-[600px]:h-[7em] max-[600px]:w-[7em]"
               : "h-auto w-[7.5rem] object-contain"
           }
         />

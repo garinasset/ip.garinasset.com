@@ -26,6 +26,8 @@
 
 [https://ip.garinasset.com](https://ip.garinasset.com)
 
+“您的 IP”通过浏览器分别请求 IPv4 和 IPv6 接口；接口不可达、响应无效或请求超时时，对应地址显示 `None`。IPv6 接口必须使用浏览器信任的 HTTPS 证书和仅有 AAAA 记录的域名。
+
 ## 📚 官方文档
 
 [Next.js](https://nextjs.org/docs) ·
