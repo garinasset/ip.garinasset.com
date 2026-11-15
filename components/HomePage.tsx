@@ -20,8 +20,13 @@ function HomePage() {
   const mode = queryIp ? "query" : "home";
 
   const [data, setData] = useState<IpInfo | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(Boolean(queryIp));
   const [error, setError] = useState("");
+  const [stateQuery, setStateQuery] = useState(queryIp);
+
+  const queryChanged = queryIp !== stateQuery;
+  const currentData = queryChanged ? null : data;
+  const queryLoading = loading || queryChanged;
 
   useEffect(() => {
     if (!queryIp) {
@@ -30,6 +35,7 @@ function HomePage() {
       setData(null);
       setLoading(false);
       setError("");
+      setStateQuery(queryIp);
       return;
     }
 
@@ -37,6 +43,7 @@ function HomePage() {
       setData(null);
       setLoading(false);
       setError("❌ URL 中的 IP 地址不是有效 IP 地址");
+      setStateQuery(queryIp);
       return;
     }
 
@@ -46,6 +53,7 @@ function HomePage() {
       setLoading(true);
       setError("");
       setData(null);
+      setStateQuery(queryIp);
 
       try {
         const result = await fetchIpInfo(queryIp);
@@ -109,7 +117,7 @@ function HomePage() {
           </header>
 
           {/* Error section */}
-          {error && (
+          {!queryChanged && error && (
             <div className="text-center text-red-600">
               {error}
             </div>
@@ -119,8 +127,8 @@ function HomePage() {
           <div className="box-border px-4 lg:px-8 py-4 flex w-full max-w-[54rem] flex-col items-center rounded-[0.875em] bg-[#fafafa]">
             <ContentIp
               ip={queryIp}
-              data={data}
-              loading={loading}
+              data={currentData}
+              loading={queryLoading}
             />
           </div>
 
@@ -128,8 +136,8 @@ function HomePage() {
           <div className="box-border px-4 lg:px-8 py-4 flex w-full max-w-[54rem] flex-col items-center rounded-[0.875em] bg-[#fafafa]">
             <ApiTryout
               ip={queryIp}
-              data={data}
-              loading={loading}
+              data={currentData}
+              loading={queryLoading}
             />
 
           </div>

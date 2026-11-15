@@ -1,1 +1,12 @@
 @import "tailwindcss";
+
+@keyframes loading-dots {
+  0% { content: "·"; }
+  33.333% { content: "··"; }
+  66.667% { content: "···"; }
+}
+
+.loading-dots::after {
+  content: "·";
+  animation: loading-dots 1.05s steps(1, end) infinite;
+}

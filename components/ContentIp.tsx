@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import LoadingDots from "@/components/LoadingDots";
 
 import {
   countryCodeToFlag,
@@ -139,7 +139,7 @@ function ResultItem({
       {/* 右边 Value */}
       <div className="inline-block max-w-full break-all text-left leading-[1.5] text-[rgb(0,0,153)]">
         {value === undefined ? (
-          <DotAnimation />
+          <LoadingDots />
         ) : (
           value
         )}
@@ -147,25 +147,4 @@ function ResultItem({
     </div>
 
   );
-}
-
-
-function DotAnimation() {
-  const [dots, setDots] = useState("·");
-
-  useEffect(() => {
-    const timer = window.setInterval(() => {
-      setDots((current) => {
-        if (current === "·") return "··";
-        if (current === "··") return "···";
-        return "·";
-      });
-    }, 350);
-
-    return () => {
-      window.clearInterval(timer);
-    };
-  }, []);
-
-  return <>{dots}</>;
 }

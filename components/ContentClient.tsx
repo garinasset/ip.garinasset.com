@@ -3,6 +3,8 @@ import Link from "next/link";
 
 import { useEffect, useState } from "react";
 
+import LoadingDots from "@/components/LoadingDots";
+
 import {
   fetchClientIp,
   fetchClientIpAddress,
@@ -57,7 +59,6 @@ function Value({
 export default function ContentClient() {
   const [data, setData] = useState<IpInfo | null>(null);
   const [loading, setLoading] = useState(true);
-  const [dots, setDots] = useState("·");
   const [error, setError] = useState(false);
   const [ipv4, setIpv4] = useState<string | null>(null);
   const [ipv6, setIpv6] = useState<string | null>(null);
@@ -66,15 +67,6 @@ export default function ContentClient() {
     let cancelled = false;
     const controller = new AbortController();
     const timeout = window.setTimeout(() => controller.abort(), 60000);
-
-    // 加载期间显示动态省略号。
-    const dotTimer = window.setInterval(() => {
-      setDots((current) => {
-        if (current === "·") return "··";
-        if (current === "··") return "···";
-        return "·";
-      });
-    }, 350);
 
     async function loadClientIp() {
       try {
@@ -128,13 +120,12 @@ export default function ContentClient() {
       cancelled = true;
       controller.abort();
       window.clearTimeout(timeout);
-      window.clearInterval(dotTimer);
     };
   }, []);
 
   function value(actualValue: string | null | undefined) {
     if (loading) {
-      return dots;
+      return <LoadingDots />;
     }
 
     if (error) {
@@ -184,7 +175,7 @@ export default function ContentClient() {
                       {address}
                     </Link>
                   ) : (
-                    address ?? dots
+                    address ?? <LoadingDots />
                   )}
                 </Value>
               </div>
