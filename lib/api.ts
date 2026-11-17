@@ -3,7 +3,7 @@ import { isValidIpAddress } from "@/lib/ip";
 const API_BASE = "https://api.garinasset.com";
 
 const CLIENT_IP_ENDPOINTS = {
-  IPv4: "https://ip64.onrender.com/me",
+  IPv4: "https://ip64.garinasset.com/me",
   IPv6: "https://dr.garinasset.com:8443/ip/me",
 };
 
